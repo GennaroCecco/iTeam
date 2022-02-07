@@ -1,0 +1,257 @@
+@charset "ISO-8859-1";
+
+
+body {
+    margin: 0;
+    position: relative;
+    min-height: 100vh;
+    font-family: -webkit-pictograph;
+}
+
+.logo img {
+    width: 180px;
+    height: 180px;
+}
+
+.content-home {
+    text-align: center;
+    padding-bottom: 205px;
+}
+
+.content-home h1 {
+    font-size: 60px;
+}
+
+.text-block {
+    box-shadow: 25px 30px 110px rgb(200 200 200); /*Rich Black FOGRA 39*/
+    padding: 10px 10px 15px 10px;
+    background-color: #9CC9E8;
+    border-radius: 2rem;
+    text-align: center;
+    float: left;
+    width: 40%;
+    margin: auto 2% auto 2%;
+    font-size: 28px;
+    border-color: #59A5D8;
+    border-style: groove;
+}
+
+.text-block button {
+    padding: 5px;
+    margin-top: 15px;
+    border-radius: 0.5rem;
+    font-family: -webkit-pictograph;
+    font-size: 20px;
+}
+
+.text-block a {
+    text-decoration: none;
+    font-size: 20px;
+    color: #1E1E24; /*Raisin Black*/
+}
+
+.text-block a:hover {
+    font-weight: bold;
+}
+
+.image {
+    box-shadow: 25px 30px 110px rgb(200 200 200); /*Rich Black FOGRA 39*/
+    float: right;
+    background: url(../img/AF_Home.png) center no-repeat;
+    width: 1007px;
+    height: 727px;
+    margin: 20px 2% 20px 2%;
+}
+
+.wrap {
+    display: flex;
+}
+
+.back {
+    font-size: 30px;
+    font-weight: bold;
+    width: 80%;
+    margin: 30px 10% 10% 10%;
+    text-align: center;
+    border-bottom: solid 2px;
+}
+
+a {
+    text-decoration: none;
+    color: #1E1E24;
+}
+
+/*Login*/
+
+.background-login {
+    z-index: 1;
+    background: url(../img/AF_Login.jpg) no-repeat center center fixed;
+}
+
+.login-block {
+    font-family: -webkit-pictograph;
+    text-align: center;
+    width: 500px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(126, 171, 202, 0.7); /*Air Superiority Blue*/
+    border: 2px solid rgb(11, 11, 11);
+    box-shadow: 25px 30px 110px rgb(200 200 200); /*Rich Black FOGRA 39*/
+    border-radius: 1rem;
+}
+
+.login-block img {
+    float: right;
+    position: relative;
+    top: -45px;
+    margin-right: 5px;
+    width: 100px;
+    height: 100px;
+}
+
+.components {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    margin-top: 10px;
+}
+
+.components input {
+    width: 90%;
+    margin: 15px 5% 25px 5%;
+    text-align: center;
+    font-size: 25px;
+    height: 35px;
+    color: #1E1E24; /*Raisin Black*/
+    border: none;
+    border-bottom: 2px solid;
+    background-color: rgba(0, 0, 0, .0);
+}
+
+.components input::placeholder {
+    color: #1E1E24; /*Raisin Black*/
+    opacity: 1;
+    font-size: 30px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.components a {
+    font-size: 22px;
+    text-decoration: none;
+    border-bottom: solid #1E1E24 2px; /*Raisin Black*/
+    color: #1E1E24; /*Raisin Black*/
+}
+
+.components a:hover {
+    font-weight: bold;
+}
+
+.components-button {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.components-button input {
+    width: 100px;
+    height: 40px;
+    font-size: 22px;
+    font-family: -webkit-pictograph;
+    color: black;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.content h2 {
+    font-size: 90px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 0;
+    color: #1E1E24; /*Raisin Black*/
+}
+
+/*Registrazione*/
+
+input:focus {
+    outline: none;
+}
+
+.background-reg {
+    background: url(../img/AF_Registrazione.jpg) no-repeat;
+}
+
+.reg-block {
+    font-family: -webkit-pictograph;
+    width: 650px;
+    height: 900px;
+    background: url(../img/Cartella.png);
+    position: absolute;
+    top: 5%;
+    left: 55%;
+}
+
+.reg-block h1 {
+    position: relative;
+    text-align: center;
+    margin-top: 90px;
+    font-size: 70px;
+    z-index: 1;
+}
+
+.form {
+    text-align: center;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.form input {
+    width: 60%;
+    margin: 25px 5% 25px 5%;
+    text-align: center;
+    font-size: 30px;
+    font-family: -webkit-pictograph;
+    height: 40px;
+    color: #1E1E24; /*Raisin Black*/
+    border: none;
+    border-bottom: 2px solid;
+    background-color: rgba(0, 0, 0, .0);
+}
+
+.form input::placeholder {
+    color: #1E1E24;
+}
+
+.form-button {
+    text-align: center;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.form-button input {
+    width: 190px;
+    height: 45px;
+    font-size: 28px;
+    font-family: -webkit-pictograph;
+    color: black;
+    background-color: white;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+#logo {
+    float: right;
+    position: relative;
+    top: -25px;
+    margin-right: 10px;
+    width: 180px;
+    height: 180px;
+}

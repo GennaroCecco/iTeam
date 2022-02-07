@@ -1,16 +1,26 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Genny
-  Date: 04/02/2022
-  Time: 16:05
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>$Title$</title>
+    <link rel="stylesheet" href="css/HomePage.css">
+    <link rel="icon" type="image/png" href="img/Logo Team 4-5.png"/>
+    <title>HomePage</title>
 </head>
 <body>
-<h1>FIAntastici 4 Test Branch ++Luigi testa il commit elleh</h1>
+<%@include file="/static/Header.jsp" %>
+<div class="content-home">
+    <h1>BENVENUTO IN AF CONSULTING</h1>
+    <div class="wrap">
+        <div class="text-block">
+            AF Consulting ricerca nuovo personale!
+            L'azienda fornisce ai propri dipendenti una formazione ed un orientamento di qualità,
+            rendendo più facile per il nuovo dipendente adattarsi alle esigenze dell'azienda.<br>
+            <a href="static/Registrazione.jsp">
+                <button>Lavora con noi</button>
+            </a>
+        </div>
+        <div class="image"></div>
+    </div>
+</div>
+<%@include file="/static/Footer.jsp" %>
 </body>
 </html>
