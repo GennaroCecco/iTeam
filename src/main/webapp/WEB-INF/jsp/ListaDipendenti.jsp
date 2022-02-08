@@ -10,6 +10,7 @@
     ArrayList<Dipendente> dip = (ArrayList<Dipendente>) request.getAttribute("dipendenti");
     ArrayList<Team> teams = (ArrayList<Team>) request.getAttribute("teams");
     int idTeam = (int) request.getAttribute("idTeam");
+    int indexDip = (int) request.getSession().getAttribute("index");
 %>
 <html>
 <head>
@@ -39,6 +40,7 @@
                     <div id="flex-head">Skills</div>
                     <div id="flex-head">Azione</div>
                     <div id="flex-head">Stato</div>
+                    
                     <c:forEach var="dip" items="${dipendenti}">
                         <c:if test="${dip.getStato() == StatiDipendenti.DISPONIBILE}">
                             <div id="flex">${dip.getName()} ${dip.getSurname()}</div>
@@ -82,8 +84,12 @@
                 </c:otherwise>
             </c:choose>
         </div>
+
     </div>
+
+
 </div>
+
 <c:import url="/static/Footer.jsp"/>
 </body>
 </html>

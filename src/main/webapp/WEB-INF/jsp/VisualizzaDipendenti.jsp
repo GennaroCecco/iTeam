@@ -89,6 +89,17 @@
             </c:choose>
         </div>
     </div>
+    <a href="./ListaDipendentiControl?index=0"><button>1</button></a>
+    <a href="./ListaDipendentiControl?index=1"><button>2</button></a>
+    <a href="./ListaDipendentiControl?index=2"><button>3</button></a>
+    <a href="./ListaDipendentiControl?index=3"><button>4</button></a>
+    <a href="./ListaDipendentiControl?index=4"><button>5</button></a>
+    <a href="./ListaDipendentiControl?index=5"><button>6</button></a>
+    <a href="./ListaDipendentiControl?index=6"><button>7</button></a>
+    <a href="./ListaDipendentiControl?index=7"><button>8</button></a>
+    <a href="./ListaDipendentiControl?index=8"><button>9</button></a>
+    <a href="./ListaDipendentiControl?index=9"><button>10</button></a>
+    <a href="./ListaDipendentiControl?index=10"><button>11</button></a>
 </div>
 <c:import url="/static/Footer.jsp"/>
 </body>

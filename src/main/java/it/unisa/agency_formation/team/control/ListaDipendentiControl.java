@@ -37,13 +37,28 @@ public class ListaDipendentiControl extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Utente user = (Utente) req.getSession().getAttribute("user");
+        int index;
+        if(req.getParameter("index")!=null) {
+            index = Integer.parseInt(req.getParameter("index"));
+            if (index == 0) {
+                index = 0;
+            }
+        }else{
+            index = 0;
+        }
         if (user != null && user.getRole() == RuoliUtenti.TM) {
             RequestDispatcher dispatcher;
             /*visualizzo tutti i dipendenti*/
             try {
                 ArrayList<Dipendente> dipendenti = getTuttiDipendentiFromManager();
+                ArrayList<Dipendente> dipEffettvi = new ArrayList<>();
                 if (dipendenti != null && dipendenti.size() > 0) {
-                    for (Dipendente dipendente : dipendenti) {
+                    for(int i = index*50;i<index*50+50;i++){
+                        if(i<dipendenti.size()){
+                            dipEffettvi.add(dipendenti.get(i));
+                        }
+                    }
+                    for (Dipendente dipendente : dipEffettvi) {
                         ArrayList<Skill> skills;
                         if (dipendente.getTeam() != null && dipendente.getTeam().getIdTeam() > 0) {
                             dipendente.setTeam(getTeamIdFromManager(dipendente.getTeam().getIdTeam()));
@@ -53,7 +68,12 @@ public class ListaDipendentiControl extends HttpServlet {
                             dipendente.setSkills(skills);
                         }
                     }
-                    req.setAttribute("dipendenti", dipendenti);
+                    System.out.println("ciao");
+
+                    if(index !=0 && dipendenti.size()>0){
+
+                    }
+                    req.setAttribute("dipendenti", dipEffettvi);
                     resp.getWriter().write("2");
                     dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/jsp/VisualizzaDipendenti.jsp");
                     dispatcher.forward(req, resp);
