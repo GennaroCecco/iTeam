@@ -11,7 +11,7 @@
     <h1>BENVENUTO IN AF CONSULTING</h1>
     <div class="wrap">
         <div class="text-block">
-            AF Consulting ricerca nuovo personale!
+            AF Consulting ricerca nuovo personale! Vincenzo Liguori
             L'azienda fornisce ai propri dipendenti una formazione ed un orientamento di qualità,
             rendendo più facile per il nuovo dipendente adattarsi alle esigenze dell'azienda.<br>
             <a href="static/Registrazione.jsp">
