@@ -20,6 +20,8 @@ dependencies {
     implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.25'
     implementation group: 'org.apache.tomcat', name: 'tomcat-catalina', version: '9.0.56'
+    implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.8'
+    implementation group: 'org.uma.jmetal', name: 'jmetal', version: '5.11'
 }
 
 test {
