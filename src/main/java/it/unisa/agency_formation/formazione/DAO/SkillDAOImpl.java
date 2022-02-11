@@ -156,4 +156,28 @@ public class SkillDAOImpl implements SkillDAO {
             DatabaseManager.closeConnessione(connection);
         }
     }
+
+    public int getLivelloSkill(String nomeSkill, int idDipendente) throws SQLException {
+        Connection connection = DatabaseManager.getInstance().getConnection();
+        ResultSet result;
+        PreparedStatement stmt = null;
+        ArrayList<Skill> skills = new ArrayList<>();
+        String query = "select livello from skillsdipendenti left join skill on skillsdipendenti.IdSkill = skill.IdSkill where (skillsdipendenti.idDipendente = ? and skill.NomeSkill=?)";
+        stmt = connection.prepareStatement(query);
+        try {
+            stmt.setString(1, nomeSkill);
+            stmt.setInt(2,idDipendente);
+            result = stmt.executeQuery();
+            if(result.next()){
+                return result.getInt("livello");
+            }else{
+                return 0;
+            }
+
+        } finally {
+            DatabaseManager.closeConnessione(connection);
+        }
+    }
+
+
 }
