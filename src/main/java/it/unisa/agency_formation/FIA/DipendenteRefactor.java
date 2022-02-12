@@ -6,13 +6,15 @@ public class DipendenteRefactor {
     private int id;
     private String nome,cognome,email;
     private HashMap<String,Integer> skills;
+    private int sommaLivelloSkills;
 
-    public DipendenteRefactor(int id, String nome, String cognome, String email, HashMap<String, Integer> skills) {
+    public DipendenteRefactor(int id, String nome, String cognome, String email, HashMap<String, Integer> skills, int sommaLivelloSkills) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.skills = skills;
+        this.sommaLivelloSkills = sommaLivelloSkills;
     }
 
     public DipendenteRefactor() {
@@ -56,5 +58,13 @@ public class DipendenteRefactor {
 
     public void setSkills(HashMap<String, Integer> skills) {
         this.skills = skills;
+    }
+
+    public int getSommaLivelloSkills() {
+        return sommaLivelloSkills;
+    }
+
+    public void setSommaLivelloSkills(int sommaLivelloSkills) {
+        this.sommaLivelloSkills = sommaLivelloSkills;
     }
 }
