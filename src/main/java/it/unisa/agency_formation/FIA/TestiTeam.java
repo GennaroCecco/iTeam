@@ -14,230 +14,171 @@ public class TestiTeam {
     private static final double prob_mutation = 0.5;
     private static final double prob_crossover = 0.8;
     private static final double elitism_size = 0.6;
-    private static final int scoreSkillDefault = 15;
-    private static final int teamSize = 4;
+    private static final int numPop = 500;
 
 
-    public static ArrayList<DipendenteRefactor> fromDataSet() throws IOException {
-        String[] HEADERS = {"id", "name", "surname", "email",
-                "skill1", "skill2", "skill3", "level1", "level2", "level3"};
-        Reader in = new FileReader((System.getProperty("user.home") + "\\IdeaProjects\\iTeam\\Dataset\\dataset.csv"));
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT
-                .withHeader(HEADERS)
-                .withFirstRecordAsHeader()
-                .parse(in);
-        int i = 0;
-        ArrayList<DipendenteRefactor> data = new ArrayList<>();
-        for (CSVRecord record : records) {
-            if (i == 500) {
-                break;
+    //KEEP FIRST AND SECOND BEST
+
+    /************************************************************/
+    public static TeamRefactor getFirstBest(ArrayList<TeamRefactor> popolazione, ArrayList<String> skillsRichieste) {
+        /*double maxFit = Double.MIN_VALUE;
+        int maxFitindex = 0;
+        for(int i=0;i<popolazione.size();i++){
+            if(maxFit<popolazione.get(i).calcolaFitness(skillsRichieste)){
+                maxFit = popolazione.get(i).calcolaFitness(skillsRichieste);
+                maxFitindex = i;
             }
-            DipendenteRefactor temp = new DipendenteRefactor();
-            HashMap<String, Integer> mapTemp = new HashMap<>();
-            String id = record.get("id");
-            String name = record.get("name");
-            String surname = record.get("surname");
-            String email = record.get("email");
-            String skill1 = record.get("skill1");
-            String skill2 = record.get("skill2");
-            String skill3 = record.get("skill3");
-            String livello1 = record.get("level1");
-            String livello2 = record.get("level2");
-            String livello3 = record.get("level3");
-            temp.setId(Integer.parseInt(id));
-            temp.setNome(name);
-            temp.setCognome(surname);
-            temp.setEmail(email);
-            mapTemp.put(skill1, Integer.parseInt(livello1));
-            mapTemp.put(skill2, Integer.parseInt(livello2));
-            mapTemp.put(skill3, Integer.parseInt(livello3));
-            temp.setSkills(mapTemp);
-            data.add(temp);
-        }
-        return data.size() > 0 ? data : null;
-    }
-
-    public static ArrayList<DipendenteRefactor> initPopolazione(ArrayList<DipendenteRefactor> data, int n, ArrayList<String> skillRichieste) {
-        ArrayList<DipendenteRefactor> popolazione = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            DipendenteRefactor temp = null;
-            HashMap<String, Integer> toAdd = new HashMap<>();
-
-            for (int j = 0; j < skillRichieste.size(); j++) {
-                for (int z = 0; z < 3; z++) {
-                    if (data.get(i).getSkills().containsKey(skillRichieste.get(z))) {
-                        if (toAdd.size() > 0 && toAdd.containsKey(skillRichieste.get(z))) {
-
-                        } else {
-                            toAdd.put(skillRichieste.get(z), data.get(i).getSkills().get(skillRichieste.get(z)));
-                        }
-                        temp = new DipendenteRefactor();
-                        temp.setId(data.get(i).getId());
-                        temp.setNome(data.get(i).getNome());
-                        temp.setCognome(data.get(i).getCognome());
-                        temp.setEmail(data.get(i).getEmail());
-                        temp.setSkills(data.get(i).getSkills());
-                    }
-                }
-
-
-            }
-            if (temp != null) {
-                if (toAdd.size() > 0) {
-                    int somma = 0;
-                    temp.setSkills(toAdd);
-                    Collection<String> key = toAdd.keySet();
-                    for (String s : key) {
-                        somma += toAdd.get(s);
-
-                    }
-
-                    temp.setSommaLivelloSkills(somma);
-
-
-                }
-                popolazione.add(temp);
-            }
-        }
-        return popolazione.size() > 0 ? popolazione : null;
-    }
-
-
-    public static ArrayList<DipendenteRefactor> onePointCrossover(ArrayList<DipendenteRefactor> individuo1, ArrayList<DipendenteRefactor> individuo2) {
-        for (int i = 0; i < individuo1.size(); i++) {
-            DipendenteRefactor temp = individuo1.get(i);
-            if (new Random().nextDouble() < prob_crossover) {
-                individuo1.remove(i);
-                individuo1.add(i, individuo2.get(i));
-                individuo2.remove(i);
-                individuo2.add(i, temp);
-            }
-        }
-        ArrayList<DipendenteRefactor> toReturn = new ArrayList<>();
-        toReturn.addAll(individuo1);
-        toReturn.addAll(individuo2);
-        return toReturn;
-    }
-
-    public static ArrayList<DipendenteRefactor> randomMutation(ArrayList<DipendenteRefactor> individuo, ArrayList<String> skillsRichieste, ArrayList<DipendenteRefactor> data) {
-        ArrayList<DipendenteRefactor> newIndividuo = new ArrayList<>();
-        newIndividuo = individuo;
-        ArrayList<DipendenteRefactor> dipendenteRefactors = new ArrayList<>();
-        for (int i = 0; i < individuo.size(); i++) {
-            DipendenteRefactor temp = null;
-            if (new Random().nextDouble() < prob_mutation) {
-                for (int j = 0; j < skillsRichieste.size(); j++) {
-                    //String skill = skillsRichieste.get[j];
-                    for (int z = 0; z < 3; z++) {
-                        //if(data.get(i).getSkills().constainsKey(skill))
-                        if (data.get(i).getSkills().containsKey(skillsRichieste.get(z))) {
-                            temp = new DipendenteRefactor();
-                            temp.setId(data.get(i).getId());
-                            temp.setNome(data.get(i).getNome());
-                            temp.setCognome(data.get(i).getCognome());
-                            temp.setEmail(data.get(i).getEmail());
-                            temp.setSkills(data.get(i).getSkills());
-                        }
-                    }
-                }
-                if (temp != null) {
-                    dipendenteRefactors.add(temp);
-                }
-            }
-        }
-        /*for(DipendenteRefactor dipendenteRefactor : dipendenteRefactors){
-            newIndividuo.getDipendenti().add(dipendenteRefactor);
         }*/
-
-        newIndividuo=dipendenteRefactors;
-        return newIndividuo;
+        return popolazione.get(0);
     }
 
-    public static ArrayList<DipendenteRefactor> evaluate(ArrayList<DipendenteRefactor> popolazione) {
-        ArrayList<DipendenteRefactor> toReturn = new ArrayList<>();
-        ArrayList<DipendenteRefactor> popolazioneOrdinata = ordina(popolazione);
-        for (int i = 0; i < teamSize; i++) {
-            for (DipendenteRefactor dipendente : popolazioneOrdinata) {
-                if (dipendente.getSommaLivelloSkills()<=scoreSkillDefault&&dipendente.getSommaLivelloSkills()>=0){
-                    toReturn.add(dipendente);
-                }
+    public static TeamRefactor getSecondBest(ArrayList<TeamRefactor> popolazione, ArrayList<String> skillsRichieste) {
+        /*int maxFit1 = 0;
+        int maxFit2 = 0;
+        for(int i=0;i<popolazione.size();i++){
+            if(popolazione.get(i).calcolaFitness(skillsRichieste)>popolazione.get(maxFit1).calcolaFitness(skillsRichieste)){
+                maxFit2 = maxFit1;
+                maxFit1 = i;
+            }else if(popolazione.get(i).calcolaFitness(skillsRichieste)>popolazione.get(maxFit2).calcolaFitness(skillsRichieste)){
+                maxFit2 = i;
+            }
+        }*/
+        return popolazione.get(1);
+    }
+
+    public static ArrayList<TeamRefactor> ordina(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
+        ArrayList<TeamRefactor> toReturn = popolazione;
+        for (int i = 0; i < toReturn.size(); i++) {
+            toReturn.get(i).calcolaFitness(skills);
+        }
+        toReturn.sort(Comparator.comparing(TeamRefactor::getValoreTeam).reversed());
+        return toReturn;
+    }
+
+    /************************************************************/
+    //CROSSOVER
+    public static ArrayList<TeamRefactor> crossover(TeamRefactor team1, TeamRefactor team2) {
+        ArrayList<TeamRefactor> toReturn = new ArrayList<>();
+        double prob = new Random().nextDouble();
+        if (prob < prob_crossover) {
+            TeamRefactor temp1 = new TeamRefactor();
+            TeamRefactor temp2 = new TeamRefactor();
+            ArrayList<DipendenteRefactor> dip1 = new ArrayList<>();
+            ArrayList<DipendenteRefactor> dip2 = new ArrayList<>();
+            int pos = new Random().nextInt(team1.getDipendenti().size());
+            for (int i = 0; i < pos; i++) {
+                dip1.add(team1.getDipendenti().get(i));
+            }
+            for (int i = pos; i < team1.getDipendenti().size(); i++) {
+                dip1.add(team2.getDipendenti().get(i));
+            }
+            temp1.setDipendenti(dip1);
+            for (int i = 0; i < pos; i++) {
+                dip2.add(team2.getDipendenti().get(i));
+            }
+            for (int i = pos; i < team2.getDipendenti().size(); i++) {
+                dip2.add(team1.getDipendenti().get(i));
+            }
+            temp2.setDipendenti(dip2);
+            toReturn.add(temp1);
+            toReturn.add(temp2);
+
+        } else {
+            toReturn.add(team1);
+            toReturn.add(team2);
+        }
+        return toReturn;
+    }
+
+    public static TeamRefactor mutation(TeamRefactor team, ArrayList<TeamRefactor> popolazione) {
+        TeamRefactor newTeam = new TeamRefactor();
+        newTeam.setDipendenti(team.getDipendenti());
+
+        for (int i = 0; i < team.getDipendenti().size() - 1; i++) {
+            double prob = new Random().nextDouble();
+            if (prob < prob_mutation) {
+                TeamRefactor tmp = new TeamRefactor();
+                int pos = new Random().nextInt(popolazione.size());
+                tmp = popolazione.get(pos);
+                newTeam.getDipendenti().remove(i);
+                newTeam.getDipendenti().add(tmp.getDipendenti().get(i));
             }
         }
-        return toReturn;
-    }
-    public static ArrayList<DipendenteRefactor> ordina(ArrayList<DipendenteRefactor> daOrdinare){
-        ArrayList<DipendenteRefactor> toReturn = daOrdinare;
-        toReturn.sort(Comparator.comparing(DipendenteRefactor::getSommaLivelloSkills).reversed());
-        return toReturn;
+        return newTeam;
     }
 
-    public static ArrayList<DipendenteRefactor> elitism(ArrayList<DipendenteRefactor> popolazione, ArrayList<DipendenteRefactor> offSpring){
-        ArrayList<DipendenteRefactor> pop1 = evaluate(popolazione);
-        ArrayList<DipendenteRefactor> pop2 = evaluate(offSpring);
-        ArrayList<DipendenteRefactor> newPop = new ArrayList<>();
-        int compElite = (int)(popolazione.size()*elitism_size);
-        System.out.println(compElite);
-        //ci mancano due sort
+    public static ArrayList<TeamRefactor> elitism(ArrayList<TeamRefactor>popolazione, ArrayList<TeamRefactor> off, ArrayList<String> skills){
+        ArrayList<TeamRefactor> population = ordina(popolazione,skills);
+        ArrayList<TeamRefactor> offSpring = ordina(off,skills);
+
+        int compElite =(int)(population.size()*elitism_size);
+        ArrayList<TeamRefactor> newPop = new ArrayList<>();
+        int secondIndex = population.size()-compElite;
         for(int i=0;i<compElite;i++){
-            newPop.add(popolazione.get(i));
+            newPop.add(population.get(i));
         }
-        for (int i=compElite;i<offSpring.size()-compElite;i++){
+        for(int i=0;i<secondIndex;i++){
             newPop.add(offSpring.get(i));
         }
-
         return newPop;
     }
 
-    public static void evolve(ArrayList<DipendenteRefactor> popolazione, ArrayList<String> skillsRichieste){
-        int numIter = 50;
 
-        for(int i=0;i<numIter;i++){
-            ArrayList<DipendenteRefactor> genitori = new ArrayList<>();
-            for(int j=0;j<50-1;j=j+4){
-                ArrayList<DipendenteRefactor> ind1 = new ArrayList<>();
-                ArrayList<DipendenteRefactor> ind2 = new ArrayList<>();
-                ind1.add(popolazione.get(j));
-                ind1.add(popolazione.get(j+1));
-                ind2.add(popolazione.get(j+2));
-                ind2.add(popolazione.get(j+3));
-                genitori = onePointCrossover(ind1,ind2);
+
+    public static void evolve(ArrayList<TeamRefactor> population, ArrayList<String> skillsRichieste) {
+        int numIterazioni = 1000;
+        double bestScore = 16.0;
+        for (int i = 0; i < numIterazioni; i++) {
+            System.out.println("Iterazione numero: "+i);
+            ArrayList<TeamRefactor> pool = population;
+
+            //crossover
+            ArrayList<TeamRefactor> parents = new ArrayList<>();
+            for (int j = 0; j < (numPop-1)/2; j++) {
+                population = ordina(population, skillsRichieste);
+                TeamRefactor team1 = getFirstBest(pool, skillsRichieste);
+                TeamRefactor team2 = getSecondBest(pool, skillsRichieste);
+                parents.add(crossover(team1, team2).get(0));
+                parents.add(crossover(team1, team2).get(1));
             }
-            ArrayList<DipendenteRefactor> offSpring = randomMutation(genitori,skillsRichieste,popolazione);
-            ArrayList<DipendenteRefactor> pop = elitism(popolazione,offSpring);
-            ArrayList<DipendenteRefactor> best = evaluate(pop);
 
-            if(i%4==0) {
-                for (DipendenteRefactor dip : best) {
-                    System.out.println("ID: " + dip.getId());
+            //mutation
+            ArrayList<TeamRefactor> offSpring = new ArrayList<>();
+            for (TeamRefactor team : parents) {
+                offSpring.add(mutation(team, population));
+            }
+            population = elitism(population,offSpring,skillsRichieste);
+            TeamRefactor teamRefactor = null;
+            for (int j = 0; j < population.size(); j++) {
+                if (population.get(j).calcolaFitness(skillsRichieste) < bestScore) {
+                    teamRefactor = population.get(j);
+                    bestScore = population.get(j).calcolaFitness(skillsRichieste);
                 }
+            }
+            if (teamRefactor != null) {
+                for (DipendenteRefactor dip : teamRefactor.getDipendenti()) {
+                    System.out.println("Genarazione: " + i + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Congome: " + dip.getCognome());
+                }
+                System.out.println("Valutazione"+teamRefactor.getValoreTeam());
+                System.out.println("-----------------");
+
             }
 
         }
-
     }
 
 
+    //MAIN
 
+    /*****************************************************************************/
     public static void main(String[] args) throws IOException {
-        ArrayList<DipendenteRefactor> data = fromDataSet();
-        if (data != null) {
-            ArrayList<String> skillsRichieste = new ArrayList<>();
-            skillsRichieste.add("Python");
-            skillsRichieste.add("React");
-            skillsRichieste.add("SQL");
-            ArrayList<DipendenteRefactor> popolazione = initPopolazione(data, 500, skillsRichieste);
-            if (popolazione != null) {
-                System.out.println("Dimensione popolazione: " + popolazione.size());
-            } else {
-                System.out.println("Errore retrieve form dataSet");
-            }
+        ArrayList<DipendenteRefactor> data = DataFromDataset.fromDataSet();
+        ArrayList<String> skillsRichieste = new ArrayList<>();
+        skillsRichieste.add("Java");
+        skillsRichieste.add("Python");
+        skillsRichieste.add("HTML");
+        ArrayList<TeamRefactor> population = Population.initPopulation(100000, data, skillsRichieste);
+        evolve(population, skillsRichieste);
 
-            /*
-            ArrayList<DipendenteRefactor> stampa = ordina(popolazione);
-            for(DipendenteRefactor dip : stampa){
-                System.out.println("ID: "+dip.getId()+" Somma: "+dip.getSommaLivelloSkills());
-            }*/
-            evolve(popolazione,skillsRichieste);
-        }
     }
 }
