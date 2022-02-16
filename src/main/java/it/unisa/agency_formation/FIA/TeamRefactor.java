@@ -18,22 +18,23 @@ public class TeamRefactor {
         this.dipendenti = dipendenti;
     }
 
-    public double calcolaFitness(ArrayList<String> skillsRichieste){
+    public void calcolaFitness(ArrayList<String> skillsRichieste) {
         double toReturn = 0.0;
-        for(DipendenteRefactor dip:dipendenti){
+        for (DipendenteRefactor dip : dipendenti) {
+            double temp = 0.0;
             ArrayList<String> stringheTrovate = new ArrayList<>();
-            for(int i=0;i<skillsRichieste.size();i++){
-                if(dip.getSkills().containsKey(skillsRichieste.get(i))) {
+            for (int i = 0; i < skillsRichieste.size(); i++) {
+                if (dip.getSkills().containsKey(skillsRichieste.get(i))) {
                     if (!stringheTrovate.contains(skillsRichieste.get(i))) {
-                        toReturn += dip.getSkills().get(skillsRichieste.get(i));
+                       temp += dip.getSkills().get(skillsRichieste.get(i));
                         stringheTrovate.add(skillsRichieste.get(i));
                     }
                 }
             }
+            toReturn += temp/3;
         }
-        toReturn= toReturn/dipendenti.size();
+        toReturn = toReturn / dipendenti.size();
         valoreTeam = toReturn;
-        return toReturn;
     }
 
     public double getValoreTeam() {
