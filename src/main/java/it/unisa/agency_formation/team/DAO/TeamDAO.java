@@ -111,4 +111,6 @@ public interface TeamDAO {
      * @throws SQLException errore nella query errore nella query
      */
     ArrayList<Dipendente> recuperaDipendentiDelTeam() throws SQLException;
+
+    Team recuperaTeamById2(int idTeam) throws SQLException;
 }

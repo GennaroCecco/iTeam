@@ -61,6 +61,10 @@ public class TeamDAOImpl implements TeamDAO {
      * @return boolean (false = i parametri non vengono rispettati o la funzionalità non va a buon fine,
      *                 true = la funzionalità va a buon fine)
      */
+
+
+
+
     public boolean rimuoviTeam(int idTeam) throws SQLException {
         if (idTeam < 1) {
             return false;
@@ -118,6 +122,36 @@ public class TeamDAOImpl implements TeamDAO {
                     documento.setMaterialeDiFormazione(result.getString("MaterialeDiFormazione"));
                     team.setDocumento(documento);
                 }
+            }
+            return team;
+        } finally {
+            DatabaseManager.closeConnessione(connection);
+        }
+    }
+    public Team recuperaTeamById2(int idTeam) throws SQLException {
+        if (idTeam < 1) {
+            return null;
+        }
+        Connection connection = DatabaseManager.getInstance().getConnection();
+        Team team = null;
+        PreparedStatement stmt = null;
+        ResultSet result;
+        String query = "SELECT * FROM " + TABLE_TEAM + " where IdTeam = ?";
+        try {
+            stmt = connection.prepareStatement(query);
+            stmt.setInt(1, idTeam);
+            result = stmt.executeQuery();
+            if (result.next()) {
+                team = new Team();
+                Documento documento = new Documento();
+                team.setIdTeam(result.getInt("IdTeam"));
+                team.setNomeProgetto(result.getString("NomeProgetto"));
+                team.setNumeroDipendenti(result.getInt("NumeroDIpendenti"));
+                team.setNomeTeam(result.getString("NomeTeam"));
+                team.setDescrizione(result.getString("Descrizione"));
+                team.setCompetenza(result.getString("Competenza"));
+                team.setIdTM(result.getInt("IdTM"));
+
             }
             return team;
         } finally {

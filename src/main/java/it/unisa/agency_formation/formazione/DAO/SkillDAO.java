@@ -53,4 +53,6 @@ public interface SkillDAO {
      * @throws SQLException errore nella query errore nella query
      */
     ArrayList<Skill> recuperoSkillsByIdDipendente(int idDip) throws SQLException;
+
+    int getLivelloSkill(String nomeSkill, int idDipendente) throws SQLException;
 }
