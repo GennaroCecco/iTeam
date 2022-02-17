@@ -9,7 +9,10 @@ public class Population {
     public static ArrayList<TeamRefactor> initPopulation(int size, ArrayList<DipendenteRefactor> data,
                                                          ArrayList<String> skillsRichieste) {
         ArrayList<DipendenteRefactor> popolazione = new ArrayList<>();
-        int pos =new Random().nextInt(data.size()-size);
+        int pos = 0;
+        if(size < data.size()) {
+            pos = new Random().nextInt(data.size() - size);
+        }
         System.out.println("Pos:"+pos);
         for (int i = pos; i < pos+size; i++) {
             DipendenteRefactor temp = null;
