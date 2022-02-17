@@ -90,8 +90,26 @@
                                 <form action="SpecificaCompetenzeControl" method="post"
                                       id="specificaCompetenze">
                                     <input type="hidden" name="action" value="competenze">
-                                    <textarea id="specCompetenze" name="specCompetenze"
-                                              placeholder="Specifica le competenze"></textarea><br>
+                                    <div class="skills-check">
+                                        <div class="checkbox1">
+                                            <input type="checkbox" class="skill-checkbox" name="html" value="HTML">HTML<br>
+                                            <input type="checkbox" class="skill-checkbox" name="c#" value="C#">C#<br>
+                                            <input type="checkbox" class="skill-checkbox" name="c++" value="C++">C++<br>
+                                            <input type="checkbox" class="skill-checkbox" name="c" value="C">C<br>
+                                            <input type="checkbox" class="skill-checkbox" name="ruby" value="Ruby">Ruby<br>
+                                            <input type="checkbox" class="skill-checkbox" name="node" value="Node">Node.js<br>
+                                            <input type="checkbox" class="skill-checkbox" name="react" value="React">React<br>
+                                        </div>
+                                        <div class="checkbox2">
+                                            <input type="checkbox" class="skill-checkbox" name="android" value="Android">Android<br>
+                                            <input type="checkbox" class="skill-checkbox" name="javascript" value="javascript">JavaScript<br>
+                                            <input type="checkbox" class="skill-checkbox" name="python" value="Python">Python<br>
+                                            <input type="checkbox" class="skill-checkbox" name="css" value="CSS">CSS<br>
+                                            <input type="checkbox" class="skill-checkbox" name="java" value="Java">Java<br>
+                                            <input type="checkbox" class="skill-checkbox" name="php" value="PHP">PHP<br>
+                                            <input type="checkbox" class="skill-checkbox" name="sql" value="SQL">SQL<br>
+                                        </div>
+                                    </div>
                                     <input type="hidden" name="idTeam" value="${team.getIdTeam()}">
                                     <input type="button" name="specifica" value="Salva" id="specifica"
                                            onclick="checkSpecify(${indexSkill})"><br>
@@ -127,4 +145,13 @@
 </div>
 <c:import url="/static/Footer.jsp"/>
 </body>
+
+<script>
+    var limit = 3;
+    $('input.skill-checkbox').on('change', function(evt) {
+        if($(this).siblings(':checked').length >= limit) {
+            this.checked = false;
+        }
+    });
+</script>
 </html>

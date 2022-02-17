@@ -532,3 +532,16 @@ input[type=file]::file-selector-button:hover {
 #quantity, #skillName {
     width: 230px;
 }
+
+/***
+Fondamenti di Intelligenza Artificiale
+***/
+
+.skills-check {
+    display: flex;
+    width: 100%;
+}
+
+.checkbox1, .checkbox2 {
+    width: 50%;
+}

@@ -68,8 +68,6 @@ public class ListaDipendentiControl extends HttpServlet {
                             dipendente.setSkills(skills);
                         }
                     }
-                    System.out.println("ciao");
-
                     if(index !=0 && dipendenti.size()>0){
 
                     }

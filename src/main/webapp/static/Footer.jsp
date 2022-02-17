@@ -17,10 +17,10 @@
 <body>
 <div class="footer">
     <div class="footer-text">
-        <h4>Progetto di <i>Ingegneria del Software</i> - Prof.ssa F. Ferrucci - Prof. F. Palomba</h4>
+        <h4>Progetto di <i>Fondamenti di Intelligenza Artificiale</i>  - Prof. F. Palomba</h4>
     </div>
     <div class="footer-icons">
-        <a href="https://github.com/SystemFormation/AgencyFormation/tree/master">
+        <a href="https://github.com/GennaroCecco/iTeam">
             <c:choose>
                 <c:when test="${param.sameLocation==true}">
                     <img src="../img/Github.png">
