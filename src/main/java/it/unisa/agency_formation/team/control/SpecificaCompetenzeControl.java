@@ -34,7 +34,14 @@ public class SpecificaCompetenzeControl extends HttpServlet {
             String action = req.getParameter("action");
             if (action.equalsIgnoreCase("competenze")) { //update competenze
                 int idTeam = Integer.parseInt(req.getParameter("idTeam"));
-                String competence = req.getParameter("specCompetenze");
+                String comp[] = req.getParameterValues("skill");
+                String competence ="";
+                for(int i = 0; i< comp.length-1; i++){
+                    competence += comp[i]+",";
+                }
+                competence += comp[comp.length-1];
+                System.out.println(competence);
+
                 if (Check.checkCompetence(competence)) {
                     try {
                         if (!inserimentoCompetenzeNelTeam(competence, idTeam)) {
@@ -63,6 +70,8 @@ public class SpecificaCompetenzeControl extends HttpServlet {
             req.getSession().invalidate();
             resp.sendRedirect("./static/Login.jsp");
         }
+
+
     }
 
     /**

@@ -92,27 +92,26 @@
                                     <input type="hidden" name="action" value="competenze">
                                     <div class="skills-check">
                                         <div class="checkbox1">
-                                            <input type="checkbox" class="skill-checkbox" name="html" value="HTML">HTML<br>
-                                            <input type="checkbox" class="skill-checkbox" name="c#" value="C#">C#<br>
-                                            <input type="checkbox" class="skill-checkbox" name="c++" value="C++">C++<br>
-                                            <input type="checkbox" class="skill-checkbox" name="c" value="C">C<br>
-                                            <input type="checkbox" class="skill-checkbox" name="ruby" value="Ruby">Ruby<br>
-                                            <input type="checkbox" class="skill-checkbox" name="node" value="Node">Node.js<br>
-                                            <input type="checkbox" class="skill-checkbox" name="react" value="React">React<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="HTML">HTML<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="C#">C#<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="C++">C++<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="C">C<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="Ruby">Ruby<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="Node">Node.js<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="React">React<br>
                                         </div>
                                         <div class="checkbox2">
-                                            <input type="checkbox" class="skill-checkbox" name="android" value="Android">Android<br>
-                                            <input type="checkbox" class="skill-checkbox" name="javascript" value="javascript">JavaScript<br>
-                                            <input type="checkbox" class="skill-checkbox" name="python" value="Python">Python<br>
-                                            <input type="checkbox" class="skill-checkbox" name="css" value="CSS">CSS<br>
-                                            <input type="checkbox" class="skill-checkbox" name="java" value="Java">Java<br>
-                                            <input type="checkbox" class="skill-checkbox" name="php" value="PHP">PHP<br>
-                                            <input type="checkbox" class="skill-checkbox" name="sql" value="SQL">SQL<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Android">Android<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="javascript">JavaScript<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Python">Python<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="CSS">CSS<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Java">Java<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="PHP">PHP<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="SQL">SQL<br>
                                         </div>
                                     </div>
                                     <input type="hidden" name="idTeam" value="${team.getIdTeam()}">
-                                    <input type="button" name="specifica" value="Salva" id="specifica"
-                                           onclick="checkSpecify(${indexSkill})"><br>
+                                    <input type="submit" name="specifica" value="Salva" id="specifica"><br>
                                     <span id="specifyCompetence"></span>
                                 </form>
                             </div>
@@ -147,9 +146,15 @@
 </body>
 
 <script>
-    var limit = 3;
+    var limit = 4;
+    var temp;
     $('input.skill-checkbox').on('change', function(evt) {
-        if($(this).siblings(':checked').length >= limit) {
+        if($('input.skill-checkbox').siblings(':checked').length +$('input.skill-checkbox1').siblings(':checked').length  >= limit) {
+            this.checked = false;
+        }
+    });
+    $('input.skill-checkbox1').on('change', function(evt) {
+        if($('input.skill-checkbox').siblings(':checked').length +$('input.skill-checkbox1').siblings(':checked').length  >= limit) {
             this.checked = false;
         }
     });
