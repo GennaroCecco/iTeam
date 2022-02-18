@@ -65,4 +65,6 @@ public interface FormazioneManager {
      */
 
     ArrayList<Skill> recuperoSkillConIdDipendente(int idDipendente) throws SQLException;
+
+    int getIdSkill(String name) throws SQLException;
 }

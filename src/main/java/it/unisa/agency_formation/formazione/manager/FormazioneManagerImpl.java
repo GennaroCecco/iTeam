@@ -86,4 +86,9 @@ public class FormazioneManagerImpl implements FormazioneManager {
         return daoSkill.recuperoSkillsByIdDipendente(idDipendente);
     }
 
+
+    @Override
+    public int getIdSkill(String name) throws SQLException {
+        return daoSkill.getIdSkill(name);
+    }
 }

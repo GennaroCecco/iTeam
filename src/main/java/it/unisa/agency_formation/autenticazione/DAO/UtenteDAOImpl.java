@@ -56,6 +56,41 @@ public class UtenteDAOImpl implements UtenteDAO {
             DatabaseManager.closeConnessione(connection);
         }
     }
+    public  boolean salvaUtente2(Utente user) throws SQLException {
+        if (user == null || user.getName().length() > 32 || user.getSurname().length() > 32
+                || user.getPwd().length() > 16 || user.getEmail().length() > 32 || user.getPwd().length() < 3) {
+            return false;
+        }
+        Connection connection = DatabaseManager.getInstance().getConnection();
+        PreparedStatement save = null;
+        String query = "insert into " + TABLE_UTENTE + " (IdUtente,Nome,Cognome,Pwd,Mail,Ruolo)"
+                + " values(?,?,?,?,?,?)";
+        try {
+            save = connection.prepareStatement(query);
+            save.setInt(1, user.getId());
+            save.setString(2, user.getName());
+            save.setString(3, user.getSurname());
+            save.setString(4, user.getPwd());
+            save.setString(5, user.getEmail());
+            switch (user.getRole()) {
+                case CANDIDATO:
+                    save.setInt(6, 1);
+                    break;
+                case DIPENDENTE:
+                    save.setInt(6, 2);
+                    break;
+                case TM:
+                    save.setInt(6, 3);
+                    break;
+                case HR:
+                    save.setInt(6, 4);
+                    break;
+            }
+            return save.executeUpdate() != 0;
+        } finally {
+            DatabaseManager.closeConnessione(connection);
+        }
+    }
 
     /**
      * Questo metodo permette di recuperare un utente

@@ -20,7 +20,7 @@ import java.util.Arrays;
 public class OttimizzaTeamControl extends HttpServlet {
 
     //ci permette di avere un tempo di esecuzione di circa 3,5 secondi
-    private static final int SIZE_POPULATION = 10000;
+    private static final int SIZE_POPULATION = 20000;
     private static DecimalFormat df = new DecimalFormat("###.##");
 
     @Override

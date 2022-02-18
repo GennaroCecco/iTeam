@@ -80,4 +80,8 @@ public interface AutenticazioneManager {
      * @throws SQLException errore nella query errore nella query
      */
     boolean setTeamDipendente(int idDip, int idTeam) throws SQLException;
+
+    boolean salvaUtente2(Utente user) throws SQLException;
+    boolean assumiCandidato2(Dipendente dipendente) throws SQLException;
+    boolean salvaDipendente2(Dipendente dipendente,int id) throws SQLException;
 }

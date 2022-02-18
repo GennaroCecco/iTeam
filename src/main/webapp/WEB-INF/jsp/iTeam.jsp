@@ -1,6 +1,7 @@
 <%@ page import="it.unisa.agency_formation.FIA.DipendenteRefactor" %>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="it.unisa.agency_formation.FIA.TeamRefactor" %>
+
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%

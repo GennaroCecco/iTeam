@@ -180,4 +180,26 @@ public class SkillDAOImpl implements SkillDAO {
     }
 
 
+    public int getIdSkill(String name) throws SQLException {
+        Connection connection = DatabaseManager.getInstance().getConnection();
+        ResultSet result;
+        PreparedStatement stmt = null;
+        ArrayList<Skill> skills = new ArrayList<>();
+        String query = "select IdSkill from skill where NomeSkill = ? ";
+        stmt = connection.prepareStatement(query);
+        try {
+            stmt.setString(1, name);
+            result = stmt.executeQuery();
+            if(result.next()){
+                return result.getInt("IdSkill");
+            }else{
+                return 0;
+            }
+
+        } finally {
+            DatabaseManager.closeConnessione(connection);
+        }
+    }
+
+
 }

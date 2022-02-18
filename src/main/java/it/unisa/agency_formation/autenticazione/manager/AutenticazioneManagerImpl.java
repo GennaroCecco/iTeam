@@ -86,6 +86,10 @@ public class AutenticazioneManagerImpl implements AutenticazioneManager {
         return (daoDipendente.salvaDipendente(dipendente));
     }
 
+    public boolean assumiCandidato2(Dipendente dipendente) throws SQLException {
+        return daoDipendente.salvaDipendente(dipendente);
+    }
+
     /**
      * Questa funzionalità permette di recuperare i candidati che dovranno svolgere il colloquio
      * @return {@literal ArrayList<@link Utente>} se ci sono candidati per il colloquio, null altrimenti
@@ -118,5 +122,16 @@ public class AutenticazioneManagerImpl implements AutenticazioneManager {
      * @throws SQLException errore nella query*/
     private boolean alreadyRegisteredUser(Utente user) throws SQLException {
       return daoUtente.checkEmail(user.getEmail());
+    }
+
+
+    @Override
+    public boolean salvaUtente2(Utente user) throws SQLException {
+        return daoUtente.salvaUtente2(user);
+    }
+
+    @Override
+    public boolean salvaDipendente2(Dipendente dipendente, int id) throws SQLException {
+        return daoDipendente.salvaDipendente2(dipendente,id);
     }
 }
