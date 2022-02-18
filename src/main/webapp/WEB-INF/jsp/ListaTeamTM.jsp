@@ -16,9 +16,11 @@
     <link rel="icon" type="image/png" href="img/Logo%20Team%204-5.png"/>
     <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="js/Formazione.js"></script>
+    <script type="text/javascript" src="js/Ottimizza.js"></script>
     <title>Lista Team</title>
 </head>
 <body>
+<div class="loading" id="logo-loader" style="display: none;"><img src="img/loading.gif"></div>
 <c:import url="/static/Header.jsp"/>
 <div class="footer-wrap">
     <h1>Team</h1>
@@ -56,7 +58,7 @@
                         </div>
                         <div class="ottimizza">
                         <a href="OttimizzaTeam?idTeam=${team.getIdTeam()}">
-                            <button>Ottimizza con la nostra AI</button>
+                            <button onclick="ottimizza()">Ottimizza con la nostra AI</button>
                         </a>
                         </div>
                         <div class="confermaScioglimento" name="conferma-scioglimento" style="display: none">
@@ -163,28 +165,5 @@
             this.checked = false;
         }
     });
-</script>
-<script>
-    //when page loads, the ajax request starts
-    $(document).ready(function() {
-        $(this).scrollTop(0);
-        getposts(username);
-    });
-
-    //ajax request that will show and hide the loader depending on response
-    var getposts = function (username) {
-        var params = {
-            user: username
-        };
-        $.get("../GetUserFeed",$.param(params),function(responseXml) {
-            $("#user-feed").append($(responseXml).find("feed").html()); // Parse XML, find <data> element and append its HTML to HTML DOM element with ID "somediv".
-            $('#logo-loader').hide();
-            if(isBlank(responseXml)){
-                $('#logo-loader-completed').show();
-                $('#logo-loader-image').hide();
-            }
-        });
-    };
-
 </script>
 </html>

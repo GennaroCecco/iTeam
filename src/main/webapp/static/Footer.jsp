@@ -15,7 +15,7 @@
     <title>Footer</title>
 </head>
 <body>
-<div class="footer">
+<div class="footer" id="footer">
     <div class="footer-text">
         <h4>Progetto di <i>Fondamenti di Intelligenza Artificiale</i>  - Prof. F. Palomba</h4>
     </div>

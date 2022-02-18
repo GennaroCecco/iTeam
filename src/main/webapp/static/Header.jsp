@@ -18,7 +18,7 @@
     <title>Header</title>
 </head>
 <body>
-<div class="header">
+<div class="header" id="header">
     <div class="logo">
         <c:choose>
             <c:when test="${param.sameLocation==true}">
