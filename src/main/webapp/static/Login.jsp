@@ -39,7 +39,7 @@
     <div class="components">
         <a href="Error.jsp">Recupero Password</a>
     </div>
-    <div class="back"><a href="http://localhost:8080/AgencyFormation/">Torna alla Home</a></div>
+    <div class="back"><a href="http://localhost:8080/iTeam/">Torna alla Home</a></div>
 </div>
 </body>
 </html>

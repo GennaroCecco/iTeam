@@ -26,7 +26,7 @@ public class OttimizzaTeamControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int idTeam = Integer.parseInt(req.getParameter("idTeam"));
-        System.out.println("idtEAM:;"+idTeam);
+        System.out.println("IDTeam:" + idTeam);
         try {
             Team team = getTeamFromManager(idTeam);
             System.out.println(team.getNomeTeam());
@@ -56,18 +56,16 @@ public class OttimizzaTeamControl extends HttpServlet {
                 long startTime = System.nanoTime();
                 TeamRefactor teamRefactor = iTeam.evolve(population, skillsRichieste);
                 long endTime = System.nanoTime();
-                int second=(int) ((endTime - startTime)/1000000000);
-                req.setAttribute("tempoEsecuzione",second);
-                req.setAttribute("team",teamRefactor);
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/TeamAI.jsp");
-                dispatcher.forward(req,resp);
-
+                int second = (int) ((endTime - startTime) / 1000000000);
+                req.setAttribute("tempoEsecuzione", second);
+                req.setAttribute("team", teamRefactor);
+                req.setAttribute("teamDB", team);
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/iTeam.jsp");
+                dispatcher.forward(req, resp);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

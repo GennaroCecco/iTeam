@@ -41,7 +41,7 @@
         <div class="form-button">
             <input type="button" value="Registrati" id="Registrati" onclick="checkRegistrationSubmit()">
         </div>
-        <a href="http://localhost:8080/AgencyFormation/">
+        <a href="http://localhost:8080/iTeam/">
             <div class="back">Torna alla Home</div>
         </a>
     </form>

@@ -484,7 +484,7 @@ input[type=file]::file-selector-button:hover {
     top: 2px;
 }
 
-#flex-team-button button, input[type=submit], #flex-team-competenze button, .confermaScioglimento button {
+#flex-team-button button, input[type=submit], #flex-team-competenze button, .confermaScioglimento button, .ottimizza button {
     font-size: 18px;
     border-radius: 1rem;
     background-color: white;
@@ -544,4 +544,31 @@ Fondamenti di Intelligenza Artificiale
 
 .checkbox1, .checkbox2 {
     width: 50%;
+}
+
+.lista-dipendenti {
+    width: 80%;
+    margin: auto;
+}
+
+.lista-dipendenti h3, .lista-dipendenti h2, .lista-dipendenti h4 {
+    text-align: center;
+    color: #1E1E24;
+}
+
+.team-button h4, .team-dip h4 {
+    display: inline-block;
+}
+
+.team h4 {
+    margin-top: 0;
+}
+
+
+.team-descr h4 {
+    font-weight: bolder;
+}
+
+.lista-dipendenti h3, .lista-dipendenti h4 {
+    font-weight: normal;
 }
