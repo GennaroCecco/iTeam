@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class TestiTeam {
+public class iTeam {
     private static final double prob_mutation = 0.5;
     private static final double prob_crossover = 0.8;
     private static final double elitism_size = 0.6;
@@ -125,13 +125,13 @@ public class TestiTeam {
     public static TeamRefactor evolve(ArrayList<TeamRefactor> population, ArrayList<String> skillsRichieste) {
         int numIterazioni = 100;
         double bestScore = 0.0;
-        int index=-1;
-        ArrayList<TeamRefactor> toPrint = new ArrayList<>();
-        System.out.println("Vediamo cosa posso fare...");
+        TeamRefactor tempBest = null;
         int flagStop = 0;
         ArrayList<TeamRefactor> pool = new ArrayList<>();
         ArrayList<TeamRefactor> toSort = new ArrayList<>();
+        ArrayList<TeamRefactor> toPrint = new ArrayList<>();
         TeamRefactor teamBest = null;
+        System.out.println("Vediamo cosa posso fare...");
         for (int i = 0; i < numIterazioni; i++) {
 
             char[] animationChars = new char[]{'|', '/', '-', '\\'};
@@ -140,10 +140,10 @@ public class TestiTeam {
 
             //crossover
             ArrayList<TeamRefactor> parents = new ArrayList<>();
-            for (int j = 0; j < population.size()-2; j = j + 2) {
+            for (int j = 0; j < population.size() - 2; j = j + 2) {
                 pool = ordina(population, skillsRichieste);
                 TeamRefactor team1 = pool.get(j);
-                TeamRefactor team2 = pool.get(j+1);
+                TeamRefactor team2 = pool.get(j + 1);
                 parents.add(crossover(team1, team2).get(0));
                 parents.add(crossover(team1, team2).get(1));
             }
@@ -166,31 +166,45 @@ public class TestiTeam {
                 }
             }
             toSort.add(teamBest);
-            if(i>0) {
-                if (teamBest == toSort.get(i-1)) {
+            if (i > 0) {
+                if (teamBest == toSort.get(i - 1)) {
                     flagStop++;
-                }else{
-                    flagStop=0;
+                } else {
+                    flagStop = 0;
+
                 }
             }
             //if(i%5==0) {
-                if (teamBest != null) {
-                    for (DipendenteRefactor dip : teamBest.getDipendenti()) {
-                        System.out.println("Generazione: " + i + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Cognome: " + dip.getCognome());
-                    }
-                    System.out.println("Valutazione: " + df.format(teamBest.getValoreTeam()));
-                    System.out.println("-----------------");
+            if (teamBest != null) {
+                for (DipendenteRefactor dip : teamBest.getDipendenti()) {
+                    System.out.println("Generazione: " + i + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Cognome: " + dip.getCognome());
                 }
-           // }
-            if (flagStop == 3) {
-                System.out.println("Processing: Done!");
-                toSort.sort(Comparator.comparing(TeamRefactor::getValoreTeam).reversed());
-                return toSort.get(0);
+                System.out.println("Valutazione: " + df.format(teamBest.getValoreTeam()));
+                System.out.println("-----------------");
+                TeamRefactor teamNew = new TeamRefactor();
+                teamNew.setDipendenti(teamBest.getDipendenti());
+                teamNew.setValoreTeam(teamBest.getValoreTeam());
+                toPrint.add(teamNew);
+            }
+            // }
+            if (flagStop == 7) {
+                System.out.println("Processing: Done! 'For Flag'");
+                toPrint.sort(Comparator.comparing(TeamRefactor::getValoreTeam));
+                for (int j = 0; j < toPrint.size(); j++) {
+                    if (toPrint.get(j).getValoreTeam() >= bestScore) {
+                        tempBest = toPrint.get(j);
+                    }
+                }
+                return tempBest;
             }
         }
         System.out.println("Processing: Done!");
-        toSort.sort(Comparator.comparing(TeamRefactor::getValoreTeam).reversed());
-        return toSort.get(0);
+        for (int j = 0; j < toPrint.size(); j++) {
+            if (toPrint.get(j).getValoreTeam() >= bestScore) {
+                tempBest = toPrint.get(j);
+            }
+        }
+        return tempBest;
     }
 
     //MAIN
@@ -204,13 +218,19 @@ public class TestiTeam {
         skillsRichieste.add("HTML");
         ArrayList<TeamRefactor> population = Population.initPopulation(10000, data, skillsRichieste);
         System.out.println("Dim Pop: " + population.size());
-        TeamRefactor team = evolve(population, skillsRichieste);
+        TeamRefactor team = null;
+
+        team = evolve(population, skillsRichieste);
+
         System.out.println("Team Migliore");
-        for (DipendenteRefactor dip : team.getDipendenti()) {
-            System.out.println("Dipendente: " + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Cognome: " + dip.getCognome());
+        if (team != null) {
+            for (DipendenteRefactor dip : team.getDipendenti()) {
+                System.out.println("Dipendente: " + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Cognome: " + dip.getCognome());
+            }
+            System.out.println("Valutazione: " + df.format(team.getValoreTeam()));
+            System.out.println("-----------------");
         }
-        System.out.println("Valutazione: " + df.format(team.getValoreTeam()));
-        System.out.println("-----------------");
     }
+
     private static DecimalFormat df = new DecimalFormat("###.##");
 }

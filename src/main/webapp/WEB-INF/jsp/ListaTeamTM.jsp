@@ -54,6 +54,9 @@
                                 </button>
                             </div>
                         </div>
+                        <a href="OttimizzaTeam?idTeam=${team.getIdTeam()}">
+                            <button>Ottimizza con la nostra AI</button>
+                        </a>
                         <div class="confermaScioglimento" name="conferma-scioglimento" style="display: none">
                             <h3>Sicuro di voler sciogliere il team selezionato?</h3>
                             <button class="nega" onclick="scioglimentoTeam(${indexSkill})">No</button>

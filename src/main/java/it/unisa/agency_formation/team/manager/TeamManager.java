@@ -120,4 +120,5 @@ public interface TeamManager {
      */
 
     boolean specificaLeCompetenze(String competence, int idTeam) throws SQLException;
+    Team recuperaTeamById2(int idTeam) throws SQLException;
 }

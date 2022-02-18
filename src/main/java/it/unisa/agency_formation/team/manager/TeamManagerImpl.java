@@ -149,4 +149,8 @@ public class TeamManagerImpl implements TeamManager {
         return daoTeam.specificaCompetenze(competence, idTeam);
     }
 
+    @Override
+    public Team recuperaTeamById2(int idTeam) throws SQLException {
+        return daoTeam.recuperaTeamById2(idTeam);
+    }
 }

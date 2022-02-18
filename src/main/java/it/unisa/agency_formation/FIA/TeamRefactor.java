@@ -37,6 +37,10 @@ public class TeamRefactor {
         valoreTeam = toReturn;
     }
 
+    public void setValoreTeam(double valoreTeam) {
+        this.valoreTeam = valoreTeam;
+    }
+
     public double getValoreTeam() {
         return valoreTeam;
     }

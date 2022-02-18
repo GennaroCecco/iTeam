@@ -13,7 +13,7 @@ public class DataFromDataset {
     public static ArrayList<DipendenteRefactor> fromDataSet() throws IOException {
         String[] HEADERS = {"id", "name", "surname", "email",
                 "skill1", "skill2", "skill3", "level1", "level2", "level3"};
-        Reader in = new FileReader("Dataset\\dataset.csv");
+        Reader in = new FileReader(System.getProperty("user.home")+"\\IdeaProjects\\iTeam\\Dataset\\dataset.csv");
         Iterable<CSVRecord> records = CSVFormat.DEFAULT
                 .withHeader(HEADERS)
                 .withFirstRecordAsHeader()
