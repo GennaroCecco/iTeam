@@ -8,6 +8,7 @@ public class iTeam {
     private static final double prob_mutation = 0.5;
     private static final double prob_crossover = 0.8;
     private static final double elitism_size = 0.6;
+    private static final double avg_Skills = 5.0;
 
 
     public static ArrayList<TeamRefactor> ordina(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
@@ -111,11 +112,13 @@ public class iTeam {
 
     public static ArrayList<TeamRefactor> evaluate(ArrayList<TeamRefactor> population, ArrayList<String> skills) {
         ArrayList<TeamRefactor> toReturn = new ArrayList<>();
+        double best = 5.0;
         //ArrayList<TeamRefactor> population = ordina(popolazione, skills);
         for (TeamRefactor team : population) {
             team.calcolaFitness(skills);
-            if (team.getValoreTeam() >= 2.5) {
+            if ((avg_Skills-team.getValoreTeam())<=best) {
                 toReturn.add(team);
+                best = team.getValoreTeam();
             }
         }
         return toReturn;
@@ -165,9 +168,10 @@ public class iTeam {
             if (teamBest != null && teamBest.getValoreTeam() == bestScore) {
                 dipTemp = teamBest.getDipendenti();
                 tempBest.setDipendenti(dipTemp);
-
+                tempBest.calcolaFitness(skillsRichieste);
             }
         }
+
         return tempBest;
     }
 
@@ -178,9 +182,9 @@ public class iTeam {
         ArrayList<DipendenteRefactor> data = DataFromDataset.fromDataSet();
         ArrayList<String> skillsRichieste = new ArrayList<>();
         skillsRichieste.add("Java");
-        skillsRichieste.add("Android");
+        skillsRichieste.add("PHP");
         skillsRichieste.add("Node");
-        ArrayList<TeamRefactor> population = Population.initPopulation(100000, data, skillsRichieste);
+        ArrayList<TeamRefactor> population = Population.initPopulation(data.size(), data, skillsRichieste);
         TeamRefactor team = null;
 
         team = evolve(population, skillsRichieste);
@@ -189,7 +193,6 @@ public class iTeam {
             for (DipendenteRefactor dip : team.getDipendenti()) {
                 System.out.println("Dipendente: " + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Cognome: " + dip.getCognome());
             }
-            team.calcolaFitness(skillsRichieste);
             System.out.println("Valutazione: " + df.format(team.getValoreTeam()));
             System.out.println("-----------------");
         } else {
