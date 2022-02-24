@@ -13,7 +13,7 @@ public class Population {
         if(size < data.size()) {
             pos = new Random().nextInt(data.size() - size);
         }
-        System.out.println("Pos:"+pos);
+
         for (int i = pos; i < pos+size; i++) {
             DipendenteRefactor temp = null;
             HashMap<String, Integer> toAdd = new HashMap<>();
