@@ -20,9 +20,9 @@
     <title>Lista Team</title>
 </head>
 <body>
-<div class="loading" id="logo-loader" style="display: none;"><img src="img/loading.gif"></div>
+<div class="loading" id="logo-loader" style="display: none;"><div id="video" style="overflow: hidden"></div><div id="binary"></div></div>
 <c:import url="/static/Header.jsp"/>
-<div class="footer-wrap">
+<div class="footer-wrap" id="body">
     <h1>Team</h1>
     <c:choose>
         <c:when test="${listTeam!=null}">

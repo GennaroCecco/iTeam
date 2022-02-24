@@ -17,9 +17,9 @@
     <title>TeamAI</title>
 </head>
 <body>
-<div class="loading" id="logo-loader" style="display: none;"><img src="img/loading.gif"></div>
+<div class="loading" id="logo-loader" style="display: none;"><div id="video" style="overflow: hidden"></div><div id="binary"></div></div>
 <c:import url="/static/Header.jsp"/>
-<div class="footer-wrap">
+<div class="footer-wrap" id="body">
     <h1>Il miglior team elaborato dall'AI per: <b>${teamDB.getNomeTeam()}</b></h1>
     <div class="lista-dipendenti">
         <div class="team teamAI">
