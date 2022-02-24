@@ -19,7 +19,7 @@ import java.util.Arrays;
 @WebServlet("/OttimizzaTeam")
 public class OttimizzaTeamControl extends HttpServlet {
 
-    private static final int SIZE_POPULATION = 10000;
+    private static final int SIZE_POPULATION = 100000;
     private static DecimalFormat df = new DecimalFormat("###.##");
 
     @Override
