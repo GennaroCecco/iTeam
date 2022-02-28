@@ -44,6 +44,28 @@ public class DipendenteDAOImpl implements DipendenteDAO {
         }
     }
 
+    public boolean salvaDipendente2(Dipendente dipendente,int id) throws SQLException {
+        if (dipendente == null || dipendente.getResidenza().length() > 128
+                || dipendente.getTelefono().length() > 20) {
+            return false;
+        }
+        Connection connection = DatabaseManager.getInstance().getConnection();
+        PreparedStatement save = null;
+        String query = "insert into " + TABLE_DIPENDENTE + " (IdDipendente,Residenza,Telefono,Stato,AnnoDiNascita)"
+                + " values(?,?,?,?,?)";
+        try {
+            save = connection.prepareStatement(query);
+            save.setInt(1, id);
+            save.setString(2, dipendente.getResidenza());
+            save.setString(3, dipendente.getTelefono());
+            save.setBoolean(4, true);
+            save.setInt(5, dipendente.getAnnoNascita());
+            return save.executeUpdate() != 0;
+        } finally {
+            DatabaseManager.closeConnessione(connection);
+        }
+    }
+
     /**
      * Questa funzionalità permette di settare a 2 il ruolo dell'utente quando è assunto,
      *

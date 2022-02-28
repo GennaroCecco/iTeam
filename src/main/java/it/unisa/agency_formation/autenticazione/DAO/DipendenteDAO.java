@@ -51,4 +51,6 @@ public interface DipendenteDAO {
      * @throws SQLException errore nella query errore nella query
      */
     boolean setIdTeamDipendente(int idDip, int idTeam) throws SQLException;
+
+    public boolean salvaDipendente2(Dipendente dipendente,int id) throws SQLException;
 }

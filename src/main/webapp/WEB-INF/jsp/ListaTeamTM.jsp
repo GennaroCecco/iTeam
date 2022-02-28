@@ -16,11 +16,13 @@
     <link rel="icon" type="image/png" href="img/Logo%20Team%204-5.png"/>
     <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="js/Formazione.js"></script>
+    <script type="text/javascript" src="js/Ottimizza.js"></script>
     <title>Lista Team</title>
 </head>
 <body>
+<div class="loading" id="logo-loader" style="display: none;"><div id="video" style="overflow: hidden"></div><div id="binary"></div></div>
 <c:import url="/static/Header.jsp"/>
-<div class="footer-wrap">
+<div class="footer-wrap" id="body">
     <h1>Team</h1>
     <c:choose>
         <c:when test="${listTeam!=null}">
@@ -54,6 +56,13 @@
                                 </button>
                             </div>
                         </div>
+                        <c:if test="${team.getCompetenza()!=null}">
+                        <div class="ottimizza">
+                        <a href="OttimizzaTeam?idTeam=${team.getIdTeam()}">
+                            <button onclick="ottimizza()">Ottimizza con la nostra AI</button>
+                        </a>
+                        </div>
+                        </c:if>
                         <div class="confermaScioglimento" name="conferma-scioglimento" style="display: none">
                             <h3>Sicuro di voler sciogliere il team selezionato?</h3>
                             <button class="nega" onclick="scioglimentoTeam(${indexSkill})">No</button>
@@ -90,11 +99,28 @@
                                 <form action="SpecificaCompetenzeControl" method="post"
                                       id="specificaCompetenze">
                                     <input type="hidden" name="action" value="competenze">
-                                    <textarea id="specCompetenze" name="specCompetenze"
-                                              placeholder="Specifica le competenze"></textarea><br>
+                                    <div class="skills-check">
+                                        <div class="checkbox1">
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="HTML">HTML<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="C#">C#<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="C++">C++<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="C">C<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="Ruby">Ruby<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="Node">Node.js<br>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="React">React<br>
+                                        </div>
+                                        <div class="checkbox2">
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Android">Android<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="javascript">JavaScript<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Python">Python<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="CSS">CSS<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Java">Java<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="PHP">PHP<br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="SQL">SQL<br>
+                                        </div>
+                                    </div>
                                     <input type="hidden" name="idTeam" value="${team.getIdTeam()}">
-                                    <input type="button" name="specifica" value="Salva" id="specifica"
-                                           onclick="checkSpecify(${indexSkill})"><br>
+                                    <input type="submit" name="specifica" value="Salva" id="specifica"><br>
                                     <span id="specifyCompetence"></span>
                                 </form>
                             </div>
@@ -127,4 +153,19 @@
 </div>
 <c:import url="/static/Footer.jsp"/>
 </body>
+
+<script>
+    var limit = 4;
+    var temp;
+    $('input.skill-checkbox').on('change', function(evt) {
+        if($('input.skill-checkbox').siblings(':checked').length +$('input.skill-checkbox1').siblings(':checked').length  >= limit) {
+            this.checked = false;
+        }
+    });
+    $('input.skill-checkbox1').on('change', function(evt) {
+        if($('input.skill-checkbox').siblings(':checked').length +$('input.skill-checkbox1').siblings(':checked').length  >= limit) {
+            this.checked = false;
+        }
+    });
+</script>
 </html>

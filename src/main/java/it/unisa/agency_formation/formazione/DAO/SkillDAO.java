@@ -55,4 +55,6 @@ public interface SkillDAO {
     ArrayList<Skill> recuperoSkillsByIdDipendente(int idDip) throws SQLException;
 
     int getLivelloSkill(String nomeSkill, int idDipendente) throws SQLException;
+
+    int getIdSkill(String name) throws SQLException;
 }

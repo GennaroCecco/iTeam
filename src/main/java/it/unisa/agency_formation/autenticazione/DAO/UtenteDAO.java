@@ -50,5 +50,7 @@ public interface UtenteDAO {
      */
     boolean checkEmail(String email) throws SQLException;
 
+    boolean salvaUtente2(Utente user) throws SQLException;
+
 }
 

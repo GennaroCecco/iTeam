@@ -484,7 +484,7 @@ input[type=file]::file-selector-button:hover {
     top: 2px;
 }
 
-#flex-team-button button, input[type=submit], #flex-team-competenze button, .confermaScioglimento button {
+#flex-team-button button, input[type=submit], #flex-team-competenze button, .confermaScioglimento button, .ottimizza button {
     font-size: 18px;
     border-radius: 1rem;
     background-color: white;
@@ -531,4 +531,69 @@ input[type=file]::file-selector-button:hover {
 
 #quantity, #skillName {
     width: 230px;
+}
+
+#flex-team {
+    z-index: 10;
+}
+
+/***
+Fondamenti di Intelligenza Artificiale
+***/
+
+.skills-check {
+    display: flex;
+    width: 100%;
+}
+
+.checkbox1, .checkbox2 {
+    width: 50%;
+}
+
+.lista-dipendenti {
+    width: 90%;
+    margin: auto;
+}
+
+.lista-dipendenti h3, .lista-dipendenti h2, .lista-dipendenti h4 {
+    text-align: center;
+    color: #1E1E24;
+}
+
+.team-button h4, .team-dip h4 {
+    display: inline-block;
+}
+
+.team h4 {
+    margin-top: 0;
+}
+
+.team-dip h4, team-button h4 {
+    width: 100%;
+}
+
+.team-descr h4 {
+    font-weight: bolder;
+}
+
+.lista-dipendenti h3, .lista-dipendenti h4 {
+    font-weight: normal;
+}
+
+.teamAI {
+    width: 90%;
+    margin: 0px 5% 20px 5%;
+}
+
+.ottimizza h5 {
+    font-weight: normal;
+    margin: 0 0 20px 0;
+}
+
+.loading img {
+    position: absolute;
+    top: 0; left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
 }
