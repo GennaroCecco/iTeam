@@ -19,13 +19,12 @@ import java.util.Arrays;
 @WebServlet("/OttimizzaTeam")
 public class OttimizzaTeamControl extends HttpServlet {
 
-    private static final int SIZE_POPULATION = 100000;
+    private static final int SIZE_POPULATION = 1000000;
     private static DecimalFormat df = new DecimalFormat("###.##");
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int idTeam = Integer.parseInt(req.getParameter("idTeam"));
-        System.out.println("IDTeam:" + idTeam);
         try {
             Team team = getTeamFromManager(idTeam);
             System.out.println(team.getNomeTeam());
