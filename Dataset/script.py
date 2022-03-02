@@ -4,7 +4,7 @@ from faker import Faker
 
 fake = Faker()
 
-records = 100000
+records = 1000000
 print("Sto eseguendo %d records\n" % records)
 
 fieldnames = ['id', 'name', 'surname', 'email', 'skill1', 'skill2', 'skill3', 'level1', 'level2', 'level3']
