@@ -17,7 +17,7 @@
 </head>
 <body class="background-reg">
 <div class="logo">
-    <img src="../img/Logo Team 4-5.png">
+    <img src="../img/FIAntastici4.png">
 </div>
 <div class="reg-block">
     <h1>Registrazione</h1>
