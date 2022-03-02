@@ -5,7 +5,7 @@
 iTeam is a project that deals with the creation of an artificial intelligence, capable of creating teams of employees
 based on the requirements of the project that has to be carried out.
 
-This project is built upon [Agency Formation](https://github.com/SystemFormation/AgencyFormation) 
+This project is built upon [Agency Formation](https://github.com/SystemFormation/AgencyFormation).
 
 ## Developers
 
