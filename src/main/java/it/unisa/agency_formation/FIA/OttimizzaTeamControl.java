@@ -19,13 +19,12 @@ import java.util.Arrays;
 @WebServlet("/OttimizzaTeam")
 public class OttimizzaTeamControl extends HttpServlet {
 
-    private static final int SIZE_POPULATION = 100000;
+    private static final int SIZE_POPULATION = 1000000;
     private static DecimalFormat df = new DecimalFormat("###.##");
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int idTeam = Integer.parseInt(req.getParameter("idTeam"));
-        System.out.println("IDTeam:" + idTeam);
         try {
             Team team = getTeamFromManager(idTeam);
             System.out.println(team.getNomeTeam());
@@ -53,7 +52,10 @@ public class OttimizzaTeamControl extends HttpServlet {
                 //inizio a restringere il campo, prendo e creo team che hanno dipendenti con quelle skill
                 ArrayList<TeamRefactor> population = Population.initPopulation(SIZE_POPULATION, data, skillsRichieste);
                 long startTime = System.nanoTime();
-                TeamRefactor teamRefactor = iTeam.evolve(population, skillsRichieste);
+                TeamRefactor teamRefactor =null;
+                while(teamRefactor==null) {
+                    teamRefactor = iTeam.evolve(population, skillsRichieste);
+                }
                 long endTime = System.nanoTime();
                 int second = (int) ((endTime - startTime) / 1000000000);
                 req.setAttribute("tempoEsecuzione", second);

@@ -20,9 +20,7 @@ INSERT INTO skill (`NomeSkill`, `DescrizioneSkill`) VALUES ('Android', 'Android'
 INSERT INTO skill (`NomeSkill`, `DescrizioneSkill`) VALUES ('SQL', 'SQL');
 INSERT INTO skill (`NomeSkill`, `DescrizioneSkill`) VALUES ('PHP', 'PHP');
 INSERT INTO team (`NomeProgetto`, `NumeroDipendenti`, `NomeTeam`, `Descrizione`, `IdTM`) VALUES ('TechAll', '8', 'NuoveTecnologie', 'Ricerchiamo nuove tecnologie', 3);
-INSERT INTO team (`NomeProgetto`, `NumeroDipendenti`, `NomeTeam`, `Descrizione`, `Competenza`, `IdTM`) VALUES ('NewTech', '1', 'Arte', 'Nuove tecnologie biomeccaniche', 'Basi di Ingegneria Meccanica', 3);
-INSERT INTO dipendenti (`IdDipendente`,`Residenza`, `Telefono`, `Stato`, `AnnoDiNascita`, `IdTeam`) VALUES (2,'Fisciano', '118', '0', '2000', '1');
-INSERT INTO dipendenti (`IdDipendente`,`Residenza`, `Telefono`, `Stato`, `AnnoDiNascita`, `IdTeam`) VALUES (5,'Fisciano', '777', '0', '2000', '2');
+INSERT INTO dipendenti (`IdDipendente`,`Residenza`, `Telefono`, `Stato`, `AnnoDiNascita`) VALUES (2,'Fisciano', '118', '1', '2000');
 INSERT INTO skillsdipendenti (`IdDipendente`, `IdSkill`, `Livello`) VALUES ('2', '1', '5');
 INSERT INTO skillsdipendenti (`IdDipendente`, `IdSkill`, `Livello`) VALUES ('2', '2', '3');
 

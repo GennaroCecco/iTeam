@@ -20,7 +20,7 @@ public class TeamRefactor {
 
     public void calcolaFitness(ArrayList<String> skillsRichieste) {
         double toReturn = 0.0;
-        for (DipendenteRefactor dip : dipendenti) {
+        for (DipendenteRefactor dip : this.dipendenti) {
             double temp = 0.0;
             ArrayList<String> stringheTrovate = new ArrayList<>();
             for (int i = 0; i < skillsRichieste.size(); i++) {
@@ -34,7 +34,7 @@ public class TeamRefactor {
             toReturn += temp/3;
         }
         toReturn = toReturn / dipendenti.size();
-        valoreTeam = toReturn;
+        this.valoreTeam = toReturn;
     }
 
     public void setValoreTeam(double valoreTeam) {

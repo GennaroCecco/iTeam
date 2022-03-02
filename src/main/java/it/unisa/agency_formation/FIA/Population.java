@@ -25,15 +25,15 @@ public class Population {
                             toAdd.put(skillsRichieste.get(z), data.get(i).getSkills().get(skillsRichieste.get(z)));
                             stringheTrovate.add(skillsRichieste.get(j));
                         }
-                        temp = new DipendenteRefactor();
-                        temp.setId(data.get(i).getId());
-                        temp.setNome(data.get(i).getNome());
-                        temp.setCognome(data.get(i).getCognome());
-                        temp.setEmail(data.get(i).getEmail());
-                        temp.setSkills(data.get(i).getSkills());
                     }
                 }
             }
+            temp = new DipendenteRefactor();
+            temp.setId(data.get(i).getId());
+            temp.setNome(data.get(i).getNome());
+            temp.setCognome(data.get(i).getCognome());
+            temp.setEmail(data.get(i).getEmail());
+            temp.setSkills(toAdd);
             if (temp != null && temp.getSkills().size() >= 2) {
                 popolazione.add(temp);
             }

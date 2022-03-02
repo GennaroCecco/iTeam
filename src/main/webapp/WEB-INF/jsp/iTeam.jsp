@@ -11,13 +11,13 @@
 <html>
 <head>
     <link rel="stylesheet" href="css/Common.css">
-    <link rel="icon" type="image/png" href="img/Logo%20Team%204-5.png"/>
+    <link rel="icon" type="image/png" href="img/FIAntastici4.png"/>
     <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="js/Ottimizza.js"></script>
     <title>TeamAI</title>
 </head>
 <body>
-<div class="loading" id="logo-loader" style="display: none;"><div id="video" style="overflow: hidden"></div><div id="binary"></div></div>
+<div class="loading" id="logo-loader" style="display: none;"><div id="video" style="overflow: hidden; position: fixed; top: 50%; left: 50%; margin-top: -540px; margin-left: -960px;"></div><div id="binary"></div></div>
 <c:import url="/static/Header.jsp"/>
 <div class="footer-wrap" id="body">
     <h1>Il miglior team elaborato dall'AI per: <b>${teamDB.getNomeTeam()}</b></h1>
@@ -54,11 +54,13 @@
             <div class="team-button">
                 <h2>Competenze</h2>
                 <c:forEach var="dip" items="${team.getDipendenti()}">
+                    <div>
                     <h4>
                     <c:forEach var="skill" items="${dip.getSkills()}">
                         ${skill.getKey()}: ${skill.getValue()}
                     </c:forEach>
                     </h4>
+                    </div>
                 </c:forEach>
             </div>
         </div>
