@@ -13,14 +13,14 @@
 <html>
 <head>
     <link rel="stylesheet" href="css/Common.css">
-    <link rel="icon" type="image/png" href="img/Logo%20Team%204-5.png"/>
+    <link rel="icon" type="image/png" href="img/FIAntastici4.png"/>
     <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="js/Formazione.js"></script>
     <script type="text/javascript" src="js/Ottimizza.js"></script>
     <title>Lista Team</title>
 </head>
 <body>
-<div class="loading" id="logo-loader" style="display: none;"><div id="video" style="overflow: hidden"></div><div id="binary"></div></div>
+<div class="loading" id="logo-loader" style="display: none;"><div id="video" style="overflow: hidden; position: fixed; top: 50%; left: 50%; margin-top: -540px; margin-left: -960px;"></div><div id="binary"></div></div>
 <c:import url="/static/Header.jsp"/>
 <div class="footer-wrap" id="body">
     <h1>Team</h1>
