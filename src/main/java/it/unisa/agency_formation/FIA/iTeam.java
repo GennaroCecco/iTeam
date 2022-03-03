@@ -1,10 +1,12 @@
 package it.unisa.agency_formation.FIA;
 
 import it.unisa.agency_formation.team.domain.Team;
+import org.jfree.ui.RefineryUtilities;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
+
 
 public class iTeam {
     private static final double prob_mutation = 0.5;
@@ -12,7 +14,6 @@ public class iTeam {
     private static final double elitism_size = 0.6;
     private static final double avg_Skills = 5.0;
     private static final DecimalFormat df = new DecimalFormat("###.##");
-
 
     public static ArrayList<TeamRefactor> ordina(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
         ArrayList<TeamRefactor> toReturn = popolazione;
@@ -135,20 +136,23 @@ public class iTeam {
     /************************************************************/
 
     public static TeamRefactor evolve(ArrayList<TeamRefactor> population, ArrayList<String> skillsRichieste) {
-        int numIterazioni = 500;
+        int numIterazioni = 100;
         double bestScore = 0.0;
         ArrayList<TeamRefactor> pool;
-        ArrayList<TeamRefactor> pop;
-        ArrayList<TeamRefactor> elite;
+        ArrayList<TeamRefactor> pop=population;
+        ArrayList<TeamRefactor> genPassata=new ArrayList<>();
+        ArrayList<Double> scoreTeam = new ArrayList<>();
+        ArrayList<Integer> gen = new ArrayList<>();
         int index = -1;
+
         ArrayList<TeamRefactor> teamBestTemp = new ArrayList<>();
         System.out.println("Vediamo cosa posso fare...");
 
         for (int i = 0; i < numIterazioni; i++) {
             TeamRefactor teamBest = null;
             char[] animationChars = new char[]{'|', '/', '-', '\\'};
-            System.out.print("Processing: " + (i/5) + "% " + animationChars[i % 4] + "\r");
-            pop = selection(population,skillsRichieste);
+            System.out.print("Processing: " + i + "% " + animationChars[i % 4] + "\r");
+            pop=ordina(pop,skillsRichieste);
             pool = pop;
             //crossover
             ArrayList<TeamRefactor> parents = new ArrayList<>();
@@ -166,30 +170,46 @@ public class iTeam {
             }
 
             //elitism and evaluate
-            elite = elitism(pop, offSpring, skillsRichieste);
-            ArrayList<TeamRefactor> toEvaluate = evaluate(elite, skillsRichieste);
+            pop = elitism(pop, offSpring, skillsRichieste);
+            ArrayList<TeamRefactor> toEvaluate = evaluate(pop, skillsRichieste);
             for (int j = 0; j < toEvaluate.size(); j++) {
-                toEvaluate.get(j).calcolaFitness(skillsRichieste);
                 if (toEvaluate.get(j).getValoreTeam() > bestScore) {
                     teamBest = toEvaluate.get(j);
                     bestScore = toEvaluate.get(j).getValoreTeam();
+                    genPassata.add(teamBest);
                 }
             }
             if (teamBest != null) {
                 index++;
                 teamBestTemp.add(teamBest);
+                gen.add(i);
+                scoreTeam.add(teamBest.getValoreTeam());
                 for (DipendenteRefactor dip : teamBest.getDipendenti()) {
                     System.out.println("Generazione: " + i + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Congome: " + dip.getCognome());
                 }
                 System.out.println("Valutazione: " + df.format(teamBest.getValoreTeam()));
 
             }
-            if (bestScore == avg_Skills) {
+          /* if (bestScore == avg_Skills) {
+                LinearChart chart = new LinearChart(
+                        "iTeam" ,
+                        "Team valutati");
+                chart.createDataset(scoreTeam,gen);
+                chart.pack( );
+                RefineryUtilities.centerFrameOnScreen( chart );
+                chart.setVisible( true );
                 return teamBestTemp.get(index);
-            }
+            }*/
         }
-        teamBestTemp = ordina(teamBestTemp,skillsRichieste);
-        return teamBestTemp.get(0);
+
+        LinearChart chart = new LinearChart(
+                "iTeam" ,
+                "Team valutati");
+        chart.createDataset(scoreTeam,gen);
+        chart.pack( );
+        RefineryUtilities.centerFrameOnScreen( chart );
+        chart.setVisible( true );
+        return teamBestTemp.get(index);
     }
 
     //MAIN
@@ -198,9 +218,9 @@ public class iTeam {
     public static void main(String[] args) throws IOException {
         ArrayList<DipendenteRefactor> data = DataFromDataset.fromDataSet();
         ArrayList<String> skillsRichieste = new ArrayList<>();
-        skillsRichieste.add("Java");
-        skillsRichieste.add("Node");
-        skillsRichieste.add("CSS");
+        skillsRichieste.add("Android");
+        skillsRichieste.add("Python");
+        skillsRichieste.add("HTML");
         ArrayList<TeamRefactor> population= Population.initPopulation(data.size(), data, skillsRichieste);
         TeamRefactor team = null;
         System.out.println("Dim pop: " + population.size());
