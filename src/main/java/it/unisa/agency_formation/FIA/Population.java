@@ -34,7 +34,7 @@ public class Population {
             temp.setCognome(data.get(i).getCognome());
             temp.setEmail(data.get(i).getEmail());
             temp.setSkills(toAdd);
-            if (temp != null && temp.getSkills().size() >= 2) {
+            if (temp.getSkills().size() >= 2) {
                 popolazione.add(temp);
             }
         }

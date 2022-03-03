@@ -1,5 +1,7 @@
 package it.unisa.agency_formation.FIA;
 
+import it.unisa.agency_formation.team.domain.Team;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -9,6 +11,7 @@ public class iTeam {
     private static final double prob_crossover = 0.8;
     private static final double elitism_size = 0.6;
     private static final double avg_Skills = 5.0;
+    private static final DecimalFormat df = new DecimalFormat("###.##");
 
 
     public static ArrayList<TeamRefactor> ordina(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
@@ -32,31 +35,22 @@ public class iTeam {
             ArrayList<DipendenteRefactor> dip2 = new ArrayList<>();
             int pos = new Random().nextInt(team1.getDipendenti().size());
             for (int i = 0; i < pos; i++) {
-                if (dip1.contains(team1.getDipendenti().get(i))) {
-                } else {
+                if (!dip1.contains(team1.getDipendenti().get(i))) {
                     dip1.add(team1.getDipendenti().get(i));
                 }
-            }
-            for (int i = pos; i < team1.getDipendenti().size(); i++) {
-                if (dip1.contains(team2.getDipendenti().get(i))) {
-                } else {
-                    dip1.add(team2.getDipendenti().get(i));
-                }
-            }
-            temp1.setDipendenti(dip1);
-            for (int i = 0; i < pos; i++) {
-                if (dip2.contains(team2.getDipendenti().get(i))) {
-                } else {
+                if (!dip2.contains(team2.getDipendenti().get(i))) {
                     dip2.add(team2.getDipendenti().get(i));
                 }
             }
-            for (int i = pos; i < team2.getDipendenti().size(); i++) {
-                if (dip2.contains(team1.getDipendenti().get(i))) {
-
-                } else {
+            for (int i = pos; i < team1.getDipendenti().size(); i++) {
+                if (!dip1.contains(team2.getDipendenti().get(i))) {
+                    dip1.add(team2.getDipendenti().get(i));
+                }
+                if (!dip2.contains(team1.getDipendenti().get(i))) {
                     dip2.add(team1.getDipendenti().get(i));
                 }
             }
+            temp1.setDipendenti(dip1);
             temp2.setDipendenti(dip2);
             toReturn.add(temp1);
             toReturn.add(temp2);
@@ -68,36 +62,35 @@ public class iTeam {
         return toReturn;
     }
 
+    /************************************************************/
+
     public static TeamRefactor mutation(TeamRefactor team, ArrayList<TeamRefactor> popolazione) {
         TeamRefactor newTeam = new TeamRefactor();
         newTeam.setDipendenti(team.getDipendenti());
-
         for (int i = 0; i < team.getDipendenti().size() - 1; i++) {
             double prob = new Random().nextDouble();
             TeamRefactor tmp = new TeamRefactor();
             ArrayList<DipendenteRefactor> dipTemp = new ArrayList<>();
             if (prob < prob_mutation) {
-
                 int pos = new Random().nextInt(popolazione.size());
                 tmp = popolazione.get(pos);
                 dipTemp = tmp.getDipendenti();
                 ArrayList<DipendenteRefactor> dipInNewTeam = newTeam.getDipendenti();
-
                 if (!dipInNewTeam.contains(dipTemp.get(i))) {
                     dipInNewTeam.remove(i);
                     dipInNewTeam.add(i, dipTemp.get(i));
                 }
                 newTeam.setDipendenti(dipInNewTeam);
-
             }
         }
         return newTeam;
     }
 
+    /************************************************************/
+
     public static ArrayList<TeamRefactor> elitism(ArrayList<TeamRefactor> popolazione, ArrayList<TeamRefactor> off, ArrayList<String> skills) {
         ArrayList<TeamRefactor> population = ordina(popolazione, skills);
         ArrayList<TeamRefactor> offSpring = ordina(off, skills);
-
         int compElite = (int) (population.size() * elitism_size);
         ArrayList<TeamRefactor> newPop = new ArrayList<>();
         int secondIndex = population.size() - compElite;
@@ -110,10 +103,25 @@ public class iTeam {
         return newPop;
     }
 
+    /************************************************************/
+
+    public static ArrayList<TeamRefactor> selection(ArrayList<TeamRefactor> population, ArrayList<String> skills){
+        ArrayList<TeamRefactor> newPop = new ArrayList<>();
+        population = ordina(population,skills);
+        int m = new Random().nextInt(population.size());
+        for(int i=0;i<m;i++){
+            newPop.add(population.get(i));
+        }
+        return newPop;
+    }
+
+
+
+    /************************************************************/
+
     public static ArrayList<TeamRefactor> evaluate(ArrayList<TeamRefactor> population, ArrayList<String> skills) {
         ArrayList<TeamRefactor> toReturn = new ArrayList<>();
         double best = 5.0;
-        //ArrayList<TeamRefactor> population = ordina(popolazione, skills);
         for (TeamRefactor team : population) {
             team.calcolaFitness(skills);
             if ((avg_Skills - team.getValoreTeam()) <= best) {
@@ -124,11 +132,14 @@ public class iTeam {
         return toReturn;
     }
 
+    /************************************************************/
 
     public static TeamRefactor evolve(ArrayList<TeamRefactor> population, ArrayList<String> skillsRichieste) {
-        int numIterazioni = 100;
+        int numIterazioni = 500;
         double bestScore = 0.0;
-        ArrayList<TeamRefactor> pool = new ArrayList<>();
+        ArrayList<TeamRefactor> pool;
+        ArrayList<TeamRefactor> pop;
+        ArrayList<TeamRefactor> elite;
         int index = -1;
         ArrayList<TeamRefactor> teamBestTemp = new ArrayList<>();
         System.out.println("Vediamo cosa posso fare...");
@@ -136,13 +147,12 @@ public class iTeam {
         for (int i = 0; i < numIterazioni; i++) {
             TeamRefactor teamBest = null;
             char[] animationChars = new char[]{'|', '/', '-', '\\'};
-            System.out.print("Processing: " + i + "% " + animationChars[i % 4] + "\r");
-            pool = population;
-
+            System.out.print("Processing: " + (i/5) + "% " + animationChars[i % 4] + "\r");
+            pop = selection(population,skillsRichieste);
+            pool = pop;
             //crossover
             ArrayList<TeamRefactor> parents = new ArrayList<>();
-            pool = ordina(population, skillsRichieste);
-            for (int j = 0; j < population.size() - 2; j = j + 2) {
+            for (int j = 0; j < pool.size() - 2; j = j + 2) {
                 TeamRefactor team1 = pool.get(j);
                 TeamRefactor team2 = pool.get(j + 1);
                 parents.add(crossover(team1, team2).get(0));
@@ -156,14 +166,13 @@ public class iTeam {
             }
 
             //elitism and evaluate
-            population = elitism(population, offSpring, skillsRichieste);
-            ArrayList<TeamRefactor> toEvaluate = evaluate(population, skillsRichieste);
+            elite = elitism(pop, offSpring, skillsRichieste);
+            ArrayList<TeamRefactor> toEvaluate = evaluate(elite, skillsRichieste);
             for (int j = 0; j < toEvaluate.size(); j++) {
                 toEvaluate.get(j).calcolaFitness(skillsRichieste);
                 if (toEvaluate.get(j).getValoreTeam() > bestScore) {
                     teamBest = toEvaluate.get(j);
                     bestScore = toEvaluate.get(j).getValoreTeam();
-
                 }
             }
             if (teamBest != null) {
@@ -173,12 +182,14 @@ public class iTeam {
                     System.out.println("Generazione: " + i + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Congome: " + dip.getCognome());
                 }
                 System.out.println("Valutazione: " + df.format(teamBest.getValoreTeam()));
+
             }
             if (bestScore == avg_Skills) {
                 return teamBestTemp.get(index);
             }
         }
-        return teamBestTemp.get(index);
+        teamBestTemp = ordina(teamBestTemp,skillsRichieste);
+        return teamBestTemp.get(0);
     }
 
     //MAIN
@@ -187,10 +198,10 @@ public class iTeam {
     public static void main(String[] args) throws IOException {
         ArrayList<DipendenteRefactor> data = DataFromDataset.fromDataSet();
         ArrayList<String> skillsRichieste = new ArrayList<>();
+        skillsRichieste.add("Java");
         skillsRichieste.add("Node");
         skillsRichieste.add("CSS");
-        skillsRichieste.add("Python");
-        ArrayList<TeamRefactor> population = Population.initPopulation(data.size(), data, skillsRichieste);
+        ArrayList<TeamRefactor> population= Population.initPopulation(data.size(), data, skillsRichieste);
         TeamRefactor team = null;
         System.out.println("Dim pop: " + population.size());
         team = evolve(population, skillsRichieste);
@@ -206,5 +217,5 @@ public class iTeam {
         }
     }
 
-    private static DecimalFormat df = new DecimalFormat("###.##");
+
 }
