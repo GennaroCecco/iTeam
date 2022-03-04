@@ -139,16 +139,16 @@ public class iTeam {
         int numIterazioni = 100;
         double bestScore = 0.0;
         ArrayList<TeamRefactor> pool;
-        ArrayList<TeamRefactor> pop=population;
-        ArrayList<TeamRefactor> genPassata=new ArrayList<>();
+        ArrayList<TeamRefactor> pop = population;
         ArrayList<Double> scoreTeam = new ArrayList<>();
+
         ArrayList<Integer> gen = new ArrayList<>();
         int index = -1;
 
         ArrayList<TeamRefactor> teamBestTemp = new ArrayList<>();
         System.out.println("Vediamo cosa posso fare...");
 
-        for (int i = 0; i < numIterazioni; i++) {
+         for (int i = 0; i < numIterazioni; i++) {
             TeamRefactor teamBest = null;
             char[] animationChars = new char[]{'|', '/', '-', '\\'};
             System.out.print("Processing: " + i + "% " + animationChars[i % 4] + "\r");
@@ -173,10 +173,9 @@ public class iTeam {
             pop = elitism(pop, offSpring, skillsRichieste);
             ArrayList<TeamRefactor> toEvaluate = evaluate(pop, skillsRichieste);
             for (int j = 0; j < toEvaluate.size(); j++) {
-                if (toEvaluate.get(j).getValoreTeam() > bestScore) {
-                    teamBest = toEvaluate.get(j);
-                    bestScore = toEvaluate.get(j).getValoreTeam();
-                    genPassata.add(teamBest);
+                if (toEvaluate.get(j).getValoreTeam() >= bestScore) {
+                        teamBest = toEvaluate.get(j);
+                        bestScore = toEvaluate.get(j).getValoreTeam();
                 }
             }
             if (teamBest != null) {
@@ -185,12 +184,12 @@ public class iTeam {
                 gen.add(i);
                 scoreTeam.add(teamBest.getValoreTeam());
                 for (DipendenteRefactor dip : teamBest.getDipendenti()) {
-                    System.out.println("Generazione: " + i + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Congome: " + dip.getCognome());
+                    System.out.println("Generazione: " + i + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Cognome: " + dip.getCognome());
                 }
                 System.out.println("Valutazione: " + df.format(teamBest.getValoreTeam()));
 
             }
-          /* if (bestScore == avg_Skills) {
+           if (bestScore == avg_Skills) {
                 LinearChart chart = new LinearChart(
                         "iTeam" ,
                         "Team valutati");
@@ -199,7 +198,7 @@ public class iTeam {
                 RefineryUtilities.centerFrameOnScreen( chart );
                 chart.setVisible( true );
                 return teamBestTemp.get(index);
-            }*/
+            }
         }
 
         LinearChart chart = new LinearChart(
@@ -215,27 +214,7 @@ public class iTeam {
     //MAIN
 
     /*****************************************************************************/
-    public static void main(String[] args) throws IOException {
-        ArrayList<DipendenteRefactor> data = DataFromDataset.fromDataSet();
-        ArrayList<String> skillsRichieste = new ArrayList<>();
-        skillsRichieste.add("Android");
-        skillsRichieste.add("Python");
-        skillsRichieste.add("HTML");
-        ArrayList<TeamRefactor> population= Population.initPopulation(data.size(), data, skillsRichieste);
-        TeamRefactor team = null;
-        System.out.println("Dim pop: " + population.size());
-        team = evolve(population, skillsRichieste);
-        if (team != null) {
-            System.out.println("Team Migliore");
-            for (DipendenteRefactor dip : team.getDipendenti()) {
-                System.out.println("Dipendente: " + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Cognome: " + dip.getCognome());
-            }
-            System.out.println("Valutazione: " + df.format(team.getValoreTeam()));
-            System.out.println("-----------------");
-        } else {
-            System.out.println("Scusami ho avuto dei problemi, potresti avere l'amabilità di ri-eseguirmi");
-        }
-    }
+
 
 
 }

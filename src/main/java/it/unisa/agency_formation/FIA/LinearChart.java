@@ -32,15 +32,5 @@ public class LinearChart  extends ApplicationFrame{
         }
 
     }
-
-    public static void main( String[ ] args ) {
-        LinearChart chart = new LinearChart(
-                "iTeam" ,
-                "Team valutati");
-
-        chart.pack( );
-        RefineryUtilities.centerFrameOnScreen( chart );
-        chart.setVisible( true );
-    }
 }
 
