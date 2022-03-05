@@ -29,7 +29,7 @@
                     Team realizzato in:<br>${tempoEsecuzione} secondi</h4>
                 <div class="ottimizza">
                     <a href="SalvaTeam?idTeam=${teamDB.getIdTeam()}&dip=${team.getDipendenti().get(0).getId()}&dip=${team.getDipendenti().get(1).getId()}&dip=${team.getDipendenti().get(2).getId()}&dip=${team.getDipendenti().get(3).getId()}">
-                        <button>Conferma il team</button>
+                        <button onclick="loading()">Conferma il team</button>
                     </a>
                 </div>
                 <div class="ottimizza">

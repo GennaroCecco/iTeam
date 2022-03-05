@@ -2,9 +2,8 @@
 
 # iTeam
 
-iTeam is a project that deals with the creation of an artificial intelligence, capable of creating teams of employees
+iTeam is a project for FIA (**Fondamenti di Intelligenza Artificiale** that stands for *Foundaments of Artificial Intelligence*), a course of the Department of Computer Science of the Università di Salerno, that deals with the creation of an artificial intelligence, capable of creating teams of employees
 based on the requirements of the project that has to be carried out.
-
 This project is built upon [Agency Formation](https://github.com/SystemFormation/AgencyFormation).
 
 ## Developers
@@ -25,7 +24,7 @@ All installation steps are written in *doc/iTeam_MDI.pdf*.
 ## Clone and run the project in localhost
 You can follow these steps or installation manual.
 1. Clone this repo: `git clone https://github.com/GennaroCecco/iTeam.git`
-2. Run `gradlew war` and wait for grandle build.
+2. Run `gradlew war` and wait for gradle build.
 3. Inside directory build/libs you can find .war file.
 4. Deploy .war file on your java server(ex. Tomcat).
 5. Import database and populate it with the script that you can find in **folder AF_DB**.
@@ -33,6 +32,10 @@ You can follow these steps or installation manual.
 7. Login with ["m.nocerino@studenti.unisa.it"](mailto:m.nocerino5@studenti.unisa.it) password: **"lol"** for Team Manager.
 8. Click on button "Lista Team" and then click on the button "Ottimizza con la nostra AI".
 9. Enjoy.
+
+### How to run AI
+1. Open doc/iTeam_MDI.pdf.
+2. Go to chapter 5 and follow the step-by-step guide from there.
 
 ### Branches
 

@@ -28,10 +28,7 @@
                     <input type="text" id="lname" name="lname" placeholder="Progetto" onblur="checkProject()"
                            onkeyup="checkProject()"><br>
                     <span id="rsProject"></span><br>
-                    <label for="quantity">Numero Dipendenti</label><br>
-                    <input type="number" id="quantity" name="quantity" min="1" max="20" onblur="checkMaxDip()"
-                           onkeyup="checkMaxDip()"><br>
-                    <span id="rsMaxDip"></span><br>
+                    <input type="hidden" id="quantity" name="quantity" value="4">
                     <label for="teamDescr">Descrizione</label><br>
                     <textarea id="teamDescr" name="teamDescr" placeholder="Descrizione del Team"
                               onblur="checkTeamDescr()" onkeyup="checkTeamDescr()"></textarea><br>

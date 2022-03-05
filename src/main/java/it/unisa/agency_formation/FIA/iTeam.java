@@ -106,20 +106,6 @@ public class iTeam {
 
     /************************************************************/
 
-    public static ArrayList<TeamRefactor> selection(ArrayList<TeamRefactor> population, ArrayList<String> skills){
-        ArrayList<TeamRefactor> newPop = new ArrayList<>();
-        population = ordina(population,skills);
-        int m = new Random().nextInt(population.size());
-        for(int i=0;i<m;i++){
-            newPop.add(population.get(i));
-        }
-        return newPop;
-    }
-
-
-
-    /************************************************************/
-
     public static ArrayList<TeamRefactor> evaluate(ArrayList<TeamRefactor> population, ArrayList<String> skills) {
         ArrayList<TeamRefactor> toReturn = new ArrayList<>();
         double best = 5.0;
