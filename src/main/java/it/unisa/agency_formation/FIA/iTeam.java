@@ -15,11 +15,8 @@ public class iTeam {
     private static final double avg_Skills = 5.0;
     private static final DecimalFormat df = new DecimalFormat("###.##");
 
-    public static ArrayList<TeamRefactor> ordina(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
+    public static ArrayList<TeamRefactor> ordina(ArrayList<TeamRefactor> popolazione) {
         ArrayList<TeamRefactor> toReturn = popolazione;
-        for (int i = 0; i < toReturn.size(); i++) {
-            toReturn.get(i).calcolaFitness(skills);
-        }
         toReturn.sort(Comparator.comparing(TeamRefactor::getValoreTeam).reversed());
         return toReturn;
     }
@@ -90,8 +87,8 @@ public class iTeam {
     /************************************************************/
 
     public static ArrayList<TeamRefactor> elitism(ArrayList<TeamRefactor> popolazione, ArrayList<TeamRefactor> off, ArrayList<String> skills) {
-        ArrayList<TeamRefactor> population = ordina(popolazione, skills);
-        ArrayList<TeamRefactor> offSpring = ordina(off, skills);
+        ArrayList<TeamRefactor> population = ordina(popolazione);
+        ArrayList<TeamRefactor> offSpring = ordina(off);
         int compElite = (int) (population.size() * elitism_size);
         ArrayList<TeamRefactor> newPop = new ArrayList<>();
         int secondIndex = population.size() - compElite;
@@ -111,7 +108,7 @@ public class iTeam {
         double best = 5.0;
         for (TeamRefactor team : population) {
             team.calcolaFitness(skills);
-            if ((avg_Skills - team.getValoreTeam()) <= best) {
+            if ((avg_Skills - team.getValoreTeam()) < best) {
                 toReturn.add(team);
                 best = team.getValoreTeam();
             }
@@ -134,11 +131,11 @@ public class iTeam {
         ArrayList<TeamRefactor> teamBestTemp = new ArrayList<>();
         System.out.println("Vediamo cosa posso fare...");
 
-         for (int i = 0; i < numIterazioni; i++) {
+        for (int i = 0; i < numIterazioni; i++) {
             TeamRefactor teamBest = null;
             char[] animationChars = new char[]{'|', '/', '-', '\\'};
             System.out.print("Processing: " + i + "% " + animationChars[i % 4] + "\r");
-            pop=ordina(pop,skillsRichieste);
+            pop = ordina(pop);
             pool = pop;
             //crossover
             ArrayList<TeamRefactor> parents = new ArrayList<>();
@@ -152,7 +149,7 @@ public class iTeam {
             //mutation
             ArrayList<TeamRefactor> offSpring = new ArrayList<>();
             for (TeamRefactor team : parents) {
-                offSpring.add(mutation(team, population));
+                offSpring.add(mutation(team, pop));
             }
 
             //elitism and evaluate
@@ -160,9 +157,11 @@ public class iTeam {
             ArrayList<TeamRefactor> toEvaluate = evaluate(pop, skillsRichieste);
             for (int j = 0; j < toEvaluate.size(); j++) {
                 if (toEvaluate.get(j).getValoreTeam() >= bestScore) {
-                        teamBest = toEvaluate.get(j);
-                        bestScore = toEvaluate.get(j).getValoreTeam();
+                    teamBest = toEvaluate.get(j);
+                    bestScore = toEvaluate.get(j).getValoreTeam();
+
                 }
+
             }
             if (teamBest != null) {
                 index++;
@@ -173,34 +172,26 @@ public class iTeam {
                     System.out.println("Generazione: " + i + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Cognome: " + dip.getCognome());
                 }
                 System.out.println("Valutazione: " + df.format(teamBest.getValoreTeam()));
-
             }
-           if (bestScore == avg_Skills) {
+            if (bestScore == avg_Skills) {
                 LinearChart chart = new LinearChart(
-                        "iTeam" ,
+                        "iTeam",
                         "Team valutati");
-                chart.createDataset(scoreTeam,gen);
-                chart.pack( );
-                RefineryUtilities.centerFrameOnScreen( chart );
-                chart.setVisible( true );
+                chart.createDataset(scoreTeam, gen);
+                chart.pack();
+                RefineryUtilities.centerFrameOnScreen(chart);
+                chart.setVisible(true);
                 return teamBestTemp.get(index);
             }
         }
 
         LinearChart chart = new LinearChart(
-                "iTeam" ,
+                "iTeam",
                 "Team valutati");
-        chart.createDataset(scoreTeam,gen);
-        chart.pack( );
-        RefineryUtilities.centerFrameOnScreen( chart );
-        chart.setVisible( true );
+        chart.createDataset(scoreTeam, gen);
+        chart.pack();
+        RefineryUtilities.centerFrameOnScreen(chart);
+        chart.setVisible(true);
         return teamBestTemp.get(index);
     }
-
-    //MAIN
-
-    /*****************************************************************************/
-
-
-
 }
