@@ -101,22 +101,22 @@
                                     <input type="hidden" name="action" value="competenze">
                                     <div class="skills-check">
                                         <div class="checkbox1">
-                                            <input type="checkbox" class="skill-checkbox" name="skill" value="HTML">HTML<br>
-                                            <input type="checkbox" class="skill-checkbox" name="skill" value="C#">C#<br>
-                                            <input type="checkbox" class="skill-checkbox" name="skill" value="C++">C++<br>
-                                            <input type="checkbox" class="skill-checkbox" name="skill" value="C">C<br>
-                                            <input type="checkbox" class="skill-checkbox" name="skill" value="Ruby">Ruby<br>
-                                            <input type="checkbox" class="skill-checkbox" name="skill" value="Node">Node.js<br>
-                                            <input type="checkbox" class="skill-checkbox" name="skill" value="React">React<br>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="HTML">HTML<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="C#">C#<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="C++">C++<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="C">C<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="Ruby">Ruby<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="Node">Node.js<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="React">React<br></div>
                                         </div>
                                         <div class="checkbox2">
-                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Android">Android<br>
-                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="javascript">JavaScript<br>
-                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Python">Python<br>
-                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="CSS">CSS<br>
-                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Java">Java<br>
-                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="PHP">PHP<br>
-                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="SQL">SQL<br>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="Android">Android<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="javascript">JavaScript<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="Python">Python<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="CSS">CSS<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="Java">Java<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="PHP">PHP<br></div>
+                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="SQL">SQL<br></div>
                                         </div>
                                     </div>
                                     <input type="hidden" name="idTeam" value="${team.getIdTeam()}">
