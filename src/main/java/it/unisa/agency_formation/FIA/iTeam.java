@@ -1,107 +1,108 @@
 package it.unisa.agency_formation.FIA;
 
-import it.unisa.agency_formation.team.domain.Team;
 import org.jfree.ui.RefineryUtilities;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Random;
 
 public class iTeam {
-    private static final double prob_mutation = 0.5;
+
+    private static final double prob_mutation = 0.6;
     private static final double prob_crossover = 0.8;
-    private static final double elitism_size = 0.6;
     private static final double avg_Skills = 5.0;
+    private static final int tournament_size = 2;
     private static final DecimalFormat df = new DecimalFormat("###.##");
 
-    public static ArrayList<TeamRefactor> ordina(ArrayList<TeamRefactor> popolazione) {
-        ArrayList<TeamRefactor> toReturn = popolazione;
-        toReturn.sort(Comparator.comparing(TeamRefactor::getValoreTeam).reversed());
-        return toReturn;
+
+    public static TeamRefactor tournament_selection(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
+        TeamRefactor best = null;
+        for (int i = 0; i < tournament_size; i++) {
+            TeamRefactor ind = popolazione.get(new Random().nextInt(popolazione.size()));
+            ind.calcolaFitness(skills);
+            //if(i>0 && best!=null){best.calcolaFitness(skills);}
+            if (best == null || ind.getValoreTeam() > best.getValoreTeam()) {
+                best = ind;
+            }
+        }
+        return best;
     }
 
-    /************************************************************/
-    //CROSSOVER
-    public static ArrayList<TeamRefactor> crossover(TeamRefactor team1, TeamRefactor team2) {
-        ArrayList<TeamRefactor> toReturn = new ArrayList<>();
-        double prob = new Random().nextDouble();
-        if (prob < prob_crossover) {
-            TeamRefactor temp1 = new TeamRefactor();
-            TeamRefactor temp2 = new TeamRefactor();
-            ArrayList<DipendenteRefactor> dip1 = new ArrayList<>();
-            ArrayList<DipendenteRefactor> dip2 = new ArrayList<>();
-            int pos = new Random().nextInt(team1.getDipendenti().size());
-            for (int i = 0; i < pos; i++) {
-                if (!dip1.contains(team1.getDipendenti().get(i))) {
-                    dip1.add(team1.getDipendenti().get(i));
-                }
-                if (!dip2.contains(team2.getDipendenti().get(i))) {
-                    dip2.add(team2.getDipendenti().get(i));
-                }
+    public static TeamRefactor getBest(ArrayList<TeamRefactor> generazione, ArrayList<String> skills) {
+        TeamRefactor best = null;
+        for (TeamRefactor team : generazione) {
+            team.calcolaFitness(skills);
+            if (best == null || team.getValoreTeam() > best.getValoreTeam()) {
+                best = team;
             }
-            for (int i = pos; i < team1.getDipendenti().size(); i++) {
-                if (!dip1.contains(team2.getDipendenti().get(i))) {
-                    dip1.add(team2.getDipendenti().get(i));
-                }
-                if (!dip2.contains(team1.getDipendenti().get(i))) {
-                    dip2.add(team1.getDipendenti().get(i));
-                }
-            }
-            temp1.setDipendenti(dip1);
-            temp2.setDipendenti(dip2);
-            toReturn.add(temp1);
-            toReturn.add(temp2);
+        }
+        return best;
+    }
 
-        } else {
+    public static TeamRefactor getSecondBest(ArrayList<TeamRefactor> generazione, ArrayList<String> skills) {
+        TeamRefactor best = null;
+        TeamRefactor secondBest = null;
+        for (TeamRefactor team : generazione) {
+            team.calcolaFitness(skills);
+            if (best == null || team.getValoreTeam() > best.getValoreTeam()) {
+                secondBest = best;
+                best = team;
+            }
+        }
+        return secondBest;
+    }
+
+    public static ArrayList<TeamRefactor> crossover(TeamRefactor team1, TeamRefactor team2) {
+        TeamRefactor crossedTeam1 = new TeamRefactor();
+        TeamRefactor crossedTeam2 = new TeamRefactor();
+        ArrayList<TeamRefactor> toReturn = new ArrayList<>();
+        ArrayList<DipendenteRefactor> son1 = new ArrayList<DipendenteRefactor>();
+        ArrayList<DipendenteRefactor> son2 = new ArrayList<DipendenteRefactor>();
+
+        ArrayList<DipendenteRefactor> dips1 = new ArrayList<DipendenteRefactor>();
+        ArrayList<DipendenteRefactor> dips2 = new ArrayList<DipendenteRefactor>();
+        //double prob = new Random().nextDouble();
+        dips1.addAll(team1.getDipendenti());
+        dips2.addAll(team2.getDipendenti());
+
+        if (new Random().nextDouble() < prob_crossover) {
+            int randomPointCrossover = new Random().nextInt(dips1.size());
+            for(int i=0;i<randomPointCrossover;i++){
+                son1.add(dips1.get(i));
+                son2.add(dips2.get(i));
+            }
+            for(int i=randomPointCrossover;i<dips2.size();i++){
+                son1.add(dips2.get(i));
+                son2.add(dips1.get(i));
+            }
+            crossedTeam1.setDipendenti(son1);
+            crossedTeam2.setDipendenti(son2);
+            toReturn.add(crossedTeam1);
+            toReturn.add(crossedTeam2);
+        }else{
             toReturn.add(team1);
             toReturn.add(team2);
         }
+
         return toReturn;
     }
 
-    /************************************************************/
-
     public static TeamRefactor mutation(TeamRefactor team, ArrayList<TeamRefactor> popolazione) {
-        TeamRefactor newTeam = new TeamRefactor();
-        newTeam.setDipendenti(team.getDipendenti());
-        for (int i = 0; i < team.getDipendenti().size() - 1; i++) {
-            double prob = new Random().nextDouble();
-            TeamRefactor tmp = new TeamRefactor();
-            ArrayList<DipendenteRefactor> dipTemp = new ArrayList<>();
-            if (prob < prob_mutation) {
-                int pos = new Random().nextInt(popolazione.size());
-                tmp = popolazione.get(pos);
-                dipTemp = tmp.getDipendenti();
-                ArrayList<DipendenteRefactor> dipInNewTeam = newTeam.getDipendenti();
-                if (!dipInNewTeam.contains(dipTemp.get(i))) {
-                    dipInNewTeam.remove(i);
-                    dipInNewTeam.add(i, dipTemp.get(i));
-                }
-                newTeam.setDipendenti(dipInNewTeam);
+        TeamRefactor newTeam = team;
+        double prob = new Random().nextDouble();
+        TeamRefactor tmp = new TeamRefactor();
+        int pos = new Random().nextInt(popolazione.size());
+        tmp = popolazione.get(pos);
+        if (prob < prob_mutation) {
+            int posDip = new Random().nextInt(tmp.getDipendenti().size());
+            if (!newTeam.getDipendenti().contains(tmp.getDipendenti().get(posDip))) {
+                newTeam.getDipendenti().remove(posDip);
+                newTeam.getDipendenti().add(posDip, tmp.getDipendenti().get(posDip));
             }
         }
         return newTeam;
     }
-
-    /************************************************************/
-
-    public static ArrayList<TeamRefactor> elitism(ArrayList<TeamRefactor> popolazione, ArrayList<TeamRefactor> off, ArrayList<String> skills) {
-        ArrayList<TeamRefactor> population = ordina(popolazione);
-        ArrayList<TeamRefactor> offSpring = ordina(off);
-        int compElite = (int) (population.size() * elitism_size);
-        ArrayList<TeamRefactor> newPop = new ArrayList<>();
-        int secondIndex = population.size() - compElite;
-        for (int i = 0; i < compElite; i++) {
-            newPop.add(population.get(i));
-        }
-        for (int i = 0; i < secondIndex; i++) {
-            newPop.add(offSpring.get(i));
-        }
-        return newPop;
-    }
-
-    /************************************************************/
 
     public static ArrayList<TeamRefactor> evaluate(ArrayList<TeamRefactor> population, ArrayList<String> skills) {
         ArrayList<TeamRefactor> toReturn = new ArrayList<>();
@@ -116,57 +117,48 @@ public class iTeam {
         return toReturn;
     }
 
-    /************************************************************/
 
     public static TeamRefactor evolve(ArrayList<TeamRefactor> population, ArrayList<String> skillsRichieste) {
         int numIterazioni = 100;
         double bestScore = 0.0;
         ArrayList<TeamRefactor> pool;
-        ArrayList<TeamRefactor> pop = population;
+
         ArrayList<Double> scoreTeam = new ArrayList<>();
-
         ArrayList<Integer> gen = new ArrayList<>();
-        int index = -1;
+        ArrayList<TeamRefactor> newPool = population;
 
-        ArrayList<TeamRefactor> teamBestTemp = new ArrayList<>();
         System.out.println("Vediamo cosa posso fare...");
-
+        TeamRefactor teamBest = null;
         for (int i = 0; i < numIterazioni; i++) {
-            TeamRefactor teamBest = null;
             char[] animationChars = new char[]{'|', '/', '-', '\\'};
             System.out.print("Processing: " + i + "% " + animationChars[i % 4] + "\r");
-            pop = ordina(pop);
-            pool = pop;
-            //crossover
-            ArrayList<TeamRefactor> parents = new ArrayList<>();
-            for (int j = 0; j < pool.size() - 2; j = j + 2) {
-                TeamRefactor team1 = pool.get(j);
-                TeamRefactor team2 = pool.get(j + 1);
-                parents.add(crossover(team1, team2).get(0));
-                parents.add(crossover(team1, team2).get(1));
-            }
-
-            //mutation
+            pool = newPool;
+            newPool = new ArrayList<>();
             ArrayList<TeamRefactor> offSpring = new ArrayList<>();
-            for (TeamRefactor team : parents) {
-                offSpring.add(mutation(team, pop));
+            for (int j = 0; j < pool.size(); j=j+2) {
+                TeamRefactor team1 = tournament_selection(pool, skillsRichieste);
+                TeamRefactor team2 = tournament_selection(pool, skillsRichieste);
+                TeamRefactor crossedTeam1 = crossover(team1, team2).get(0);
+                TeamRefactor crossedTeam2 = crossover(team1, team2).get(1);
+                offSpring.add(crossedTeam1);
+                offSpring.add(crossedTeam2);
             }
 
-            //elitism and evaluate
-            pop = elitism(pop, offSpring, skillsRichieste);
-            ArrayList<TeamRefactor> toEvaluate = evaluate(pop, skillsRichieste);
-            for (int j = 0; j < toEvaluate.size(); j++) {
-                if (toEvaluate.get(j).getValoreTeam() >= bestScore) {
-                    teamBest = toEvaluate.get(j);
-                    bestScore = toEvaluate.get(j).getValoreTeam();
+            for(int j=0;j<pool.size();j++){
+                newPool.add(mutation(offSpring.get(j),pool));
+            }
 
+            ArrayList<TeamRefactor> evaluatedPop = evaluate(newPool, skillsRichieste);
+            for (int j = 0; j < evaluatedPop.size(); j++) {
+                evaluatedPop.get(j).calcolaFitness(skillsRichieste);
+                if (evaluatedPop.get(j).getValoreTeam() > bestScore) {
+                    teamBest = evaluatedPop.get(j);
+                    bestScore = evaluatedPop.get(j).getValoreTeam();
                 }
-
             }
-            if (teamBest != null) {
-                index++;
-                teamBestTemp.add(teamBest);
+            if (i%5==0 || bestScore==avg_Skills) {
                 gen.add(i);
+                teamBest.calcolaFitness(skillsRichieste);
                 scoreTeam.add(teamBest.getValoreTeam());
                 for (DipendenteRefactor dip : teamBest.getDipendenti()) {
                     System.out.println("Generazione: " + i + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Cognome: " + dip.getCognome());
@@ -181,10 +173,9 @@ public class iTeam {
                 chart.pack();
                 RefineryUtilities.centerFrameOnScreen(chart);
                 chart.setVisible(true);
-                return teamBestTemp.get(index);
+                return teamBest;
             }
         }
-
         LinearChart chart = new LinearChart(
                 "iTeam",
                 "Team valutati");
@@ -192,6 +183,31 @@ public class iTeam {
         chart.pack();
         RefineryUtilities.centerFrameOnScreen(chart);
         chart.setVisible(true);
-        return teamBestTemp.get(index);
+        return teamBest;
+
     }
+
+
+    public static void main(String[] args) throws IOException {
+        ArrayList<DipendenteRefactor> data = DataFromDataset.fromDataSet();
+        ArrayList<String> skillsRichieste = new ArrayList<>();
+        skillsRichieste.add("C++");
+        skillsRichieste.add("Java");
+        skillsRichieste.add("Ruby");
+        ArrayList<TeamRefactor> population = Population.initPopulation(data.size(), data, skillsRichieste);
+        TeamRefactor team = null;
+        System.out.println("Dim pop: " + population.size());
+        team = evolve(population, skillsRichieste);
+        if (team != null) {
+            System.out.println("Team Migliore");
+            for (DipendenteRefactor dip : team.getDipendenti()) {
+                System.out.println("Dipendente: " + " ID: " + dip.getId() + " Nome: " + dip.getNome() + " Cognome: " + dip.getCognome());
+            }
+            System.out.println("Valutazione: " + df.format(team.getValoreTeam()));
+            System.out.println("-----------------");
+        } else {
+            System.out.println("Scusami ho avuto dei problemi, potresti avere l'amabilità di ri-eseguirmi");
+        }
+    }
+
 }

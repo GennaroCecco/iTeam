@@ -17,24 +17,24 @@ public class Population {
         for (int i = pos; i < pos+size; i++) {
             DipendenteRefactor temp = null;
             HashMap<String, Integer> toAdd = new HashMap<>();
-            ArrayList<String> stringheTrovate = new ArrayList<>();
+            ArrayList<String> skillsTrovate = new ArrayList<>();
             for (int j = 0; j < skillsRichieste.size(); j++) {
                 for (int z = 0; z < data.get(i).getSkills().size(); z++) {
                     if (data.get(i).getSkills().containsKey(skillsRichieste.get(z))) {
-                        if (!stringheTrovate.contains(skillsRichieste.get(z))) {
+                        if (!skillsTrovate.contains(skillsRichieste.get(z))) {
                             toAdd.put(skillsRichieste.get(z), data.get(i).getSkills().get(skillsRichieste.get(z)));
-                            stringheTrovate.add(skillsRichieste.get(j));
+                            skillsTrovate.add(skillsRichieste.get(z));
                         }
+                        temp = new DipendenteRefactor();
+                        temp.setId(data.get(i).getId());
+                        temp.setNome(data.get(i).getNome());
+                        temp.setCognome(data.get(i).getCognome());
+                        temp.setEmail(data.get(i).getEmail());
+                        temp.setSkills(toAdd);
                     }
                 }
             }
-            temp = new DipendenteRefactor();
-            temp.setId(data.get(i).getId());
-            temp.setNome(data.get(i).getNome());
-            temp.setCognome(data.get(i).getCognome());
-            temp.setEmail(data.get(i).getEmail());
-            temp.setSkills(toAdd);
-            if (temp.getSkills().size() >= 2) {
+            if (temp != null&&temp.getSkills().size() >= 1) {
                 popolazione.add(temp);
             }
         }

@@ -27,9 +27,7 @@ public class OttimizzaTeamControl extends HttpServlet {
         int idTeam = Integer.parseInt(req.getParameter("idTeam"));
         try {
             Team team = getTeamFromManager(idTeam);
-            System.out.println(team.getNomeTeam());
             String competenze = team.getCompetenza();
-            System.out.println(competenze);
             String skill1 = null;
             String skill2 = null;
             String skill3 = null;
