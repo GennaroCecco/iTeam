@@ -9,45 +9,9 @@ import java.util.*;
 public class iTeam {
 
     private static final double prob_mutation = 0.6;
-    private static final double prob_crossover = 0.8;
     private static final double avg_Skills = 5.0;
-
     private static final DecimalFormat df = new DecimalFormat("###.##");
 
-    public static ArrayList<TeamRefactor> crossover(TeamRefactor team1, TeamRefactor team2) {
-        TeamRefactor crossedTeam1 = new TeamRefactor();
-        TeamRefactor crossedTeam2 = new TeamRefactor();
-        ArrayList<TeamRefactor> toReturn = new ArrayList<>();
-        ArrayList<DipendenteRefactor> son1 = new ArrayList<DipendenteRefactor>();
-        ArrayList<DipendenteRefactor> son2 = new ArrayList<DipendenteRefactor>();
-
-        ArrayList<DipendenteRefactor> dips1 = new ArrayList<DipendenteRefactor>();
-        ArrayList<DipendenteRefactor> dips2 = new ArrayList<DipendenteRefactor>();
-        //double prob = new Random().nextDouble();
-        dips1.addAll(team1.getDipendenti());
-        dips2.addAll(team2.getDipendenti());
-
-        if (new Random().nextDouble() < prob_crossover) {
-            int randomPointCrossover = new Random().nextInt(dips1.size());
-            for (int i = 0; i < randomPointCrossover; i++) {
-                son1.add(dips1.get(i));
-                son2.add(dips2.get(i));
-            }
-            for (int i = randomPointCrossover; i < dips2.size(); i++) {
-                son1.add(dips2.get(i));
-                son2.add(dips1.get(i));
-            }
-            crossedTeam1.setDipendenti(son1);
-            crossedTeam2.setDipendenti(son2);
-            toReturn.add(crossedTeam1);
-            toReturn.add(crossedTeam2);
-        } else {
-            toReturn.add(team1);
-            toReturn.add(team2);
-        }
-
-        return toReturn;
-    }
 
     public static TeamRefactor mutation(TeamRefactor team, ArrayList<TeamRefactor> popolazione) {
         TeamRefactor newTeam = team;
@@ -101,7 +65,7 @@ public class iTeam {
             for (int j = 0; j < pool.size(); j = j + 2) {
                 TeamRefactor team1 = Selection.tournamentSelection(pool, skillsRichieste);
                 TeamRefactor team2 = Selection.tournamentSelection(pool, skillsRichieste);
-                ArrayList<TeamRefactor> crossedTeams = crossover(team1, team2);
+                ArrayList<TeamRefactor> crossedTeams = Crossover.twoPointCrossover(team1, team2);
                 TeamRefactor crossedTeam1 = crossedTeams.get(0);
                 TeamRefactor crossedTeam2 = crossedTeams.get(1);
                 offSpring.add(crossedTeam1);
