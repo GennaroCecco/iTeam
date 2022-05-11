@@ -65,7 +65,7 @@ public class iTeam {
             for (int j = 0; j < pool.size(); j = j + 2) {
                 TeamRefactor team1 = Selection.tournamentSelection(pool, skillsRichieste);
                 TeamRefactor team2 = Selection.tournamentSelection(pool, skillsRichieste);
-                ArrayList<TeamRefactor> crossedTeams = Crossover.twoPointCrossover(team1, team2);
+                ArrayList<TeamRefactor> crossedTeams = Crossover.uniformCrossover(team1, team2);
                 TeamRefactor crossedTeam1 = crossedTeams.get(0);
                 TeamRefactor crossedTeam2 = crossedTeams.get(1);
                 offSpring.add(crossedTeam1);
