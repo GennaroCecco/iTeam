@@ -10,9 +10,11 @@ public class iTeam {
 
     private static final double prob_mutation = 0.6;
     private static final double avg_Skills = 5.0;
+    private static final int numberOfMemberForTournament = 3;
     private static final DecimalFormat df = new DecimalFormat("###.##");
 
-
+    /*La mutation ci permette di modificare i geni dell’individuo corrente con geni
+     di un individuo scelto casualmente dalla popolazione */
     public static TeamRefactor mutation(TeamRefactor team, ArrayList<TeamRefactor> popolazione) {
         TeamRefactor newTeam = team;
         double prob = new Random().nextDouble();
@@ -28,7 +30,8 @@ public class iTeam {
         }
         return newTeam;
     }
-
+    /* L'evaluate sceglie i migliori individui della generazione attuale, ritornando un insieme
+    di invidui la cui differenza con avg_Skills sia più vicina a 0 */
     public static ArrayList<TeamRefactor> evaluate
             (ArrayList<TeamRefactor> population, ArrayList<String> skills) {
         ArrayList<TeamRefactor> toReturn = new ArrayList<>();
@@ -43,9 +46,10 @@ public class iTeam {
         return toReturn;
     }
 
-
+    /* L'evolve contiene tutti i passi che l'algoritmo deve seguire ciclicamente
+    (ad ogni ciclo corrisponde una generazione) */
     public static TeamRefactor evolve(ArrayList<TeamRefactor> population, ArrayList<String> skillsRichieste) {
-        int numIterazioni = 100;
+        int numIterazioni = 50;
         double bestScore = 0.0;
 
         ArrayList<Double> scoreTeam = new ArrayList<>();
@@ -57,21 +61,23 @@ public class iTeam {
         for (int i = 0; i < numIterazioni; i++) {
             ArrayList<TeamRefactor> pool;
             char[] animationChars = new char[]{'|', '/', '-', '\\'};
-            System.out.print("Processing: " + i + "% " + animationChars[i % 4] + "\r");
+            System.out.print("Processing: " + i*2 + "% " + animationChars[i % 4] + "\r");
             pool = newPool;
             newPool = new ArrayList<>();
-            ArrayList<TeamRefactor> offSpring = new ArrayList<>();
+            int tournamentSize = new Random().nextInt(population.size());
 
-            for (int j = 0; j < pool.size(); j = j + 2) {
-                TeamRefactor team1 = Selection.tournamentSelection(pool, skillsRichieste);
-                TeamRefactor team2 = Selection.tournamentSelection(pool, skillsRichieste);
-                ArrayList<TeamRefactor> crossedTeams = Crossover.uniformCrossover(team1, team2);
+            ArrayList<TeamRefactor> offSpring = new ArrayList<>();
+            ArrayList<TeamRefactor> parents = Selection.tournamentSelection(pool, skillsRichieste,tournamentSize,
+                    numberOfMemberForTournament);
+            for (int j = 0; j < parents.size()-1; j = j + 2) {
+                TeamRefactor team1 = parents.get(j);
+                TeamRefactor team2 = parents.get(j+1);
+                ArrayList<TeamRefactor> crossedTeams = Crossover.onePointCrossover(team1, team2);
                 TeamRefactor crossedTeam1 = crossedTeams.get(0);
                 TeamRefactor crossedTeam2 = crossedTeams.get(1);
                 offSpring.add(crossedTeam1);
                 offSpring.add(crossedTeam2);
             }
-
             for (int j = 0; j < offSpring.size(); j++) {
                 newPool.add(mutation(offSpring.get(j), pool));
             }
@@ -94,23 +100,23 @@ public class iTeam {
                 System.out.println("Valutazione: " + df.format(teamBest.getValoreTeam()));
             }
             if (bestScore == avg_Skills) {
-                LinearChart chart = new LinearChart(
+                /*LinearChart chart = new LinearChart(
                         "iTeam",
                         "Team valutati");
                 chart.createDataset(scoreTeam, gen);
                 chart.pack();
                 RefineryUtilities.centerFrameOnScreen(chart);
-                chart.setVisible(true);
+                chart.setVisible(true);*/
                 return teamBest;
             }
         }
-        LinearChart chart = new LinearChart(
+        /*LinearChart chart = new LinearChart(
                 "iTeam",
                 "Team valutati");
         chart.createDataset(scoreTeam, gen);
         chart.pack();
         RefineryUtilities.centerFrameOnScreen(chart);
-        chart.setVisible(true);
+        chart.setVisible(true);*/
         return teamBest;
 
     }

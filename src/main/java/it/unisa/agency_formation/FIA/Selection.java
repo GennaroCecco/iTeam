@@ -6,23 +6,38 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Selection {
-    private static final int tournament_size = 2;
     private static final double numberOfIndividuals = new Random().nextDouble();
+
     public Selection() {
     }
 
-
-    public static TeamRefactor tournamentSelection(ArrayList<TeamRefactor> popolazione,
-                                                   ArrayList<String> skills) {
-        TeamRefactor best = null;
-        for(int i=0;i<tournament_size;i++){
-            TeamRefactor ind = popolazione.get(new Random().nextInt((int)(popolazione.size()*numberOfIndividuals)));
-            ind.calcolaFitness(skills);
-            if (best == null || ind.getValoreTeam() > best.getValoreTeam()) {
-                best = ind;
+    /*La tournament selection prevede una tournamentsize di team. Per ogni torneo vengono messi a confronto
+     numberOfMemberForTournament e tra questi viene scelto il migliore. Questo tipo di selezione */
+    public static ArrayList<TeamRefactor> tournamentSelection(ArrayList<TeamRefactor> popolazione,
+                                                              ArrayList<String> skills, int tournamentSize,
+                                                              int NumberOfIndividualForTournament) {
+        ArrayList<TeamRefactor> toReturn = new ArrayList<>();
+        for (int j = 0; j < tournamentSize; j++) {
+            TeamRefactor best = null;
+            ArrayList<TeamRefactor> pop = new ArrayList<>();
+            for (int i = 0; i < NumberOfIndividualForTournament; i++) {
+                TeamRefactor ind = popolazione.get(new Random().nextInt(popolazione.size()));
+                while (pop.contains(ind)) {
+                    ind = popolazione.get(new Random().nextInt(popolazione.size()));
+                }
+                pop.add(ind);
             }
+            //start tournament
+            for (int i = 0; i < pop.size(); i++) {
+                TeamRefactor ind = pop.get(i);
+                ind.calcolaFitness(skills);
+                if (best == null || ind.getValoreTeam() > best.getValoreTeam()) {
+                    best = ind;
+                }
+            }
+            toReturn.add(best);
         }
-        return best;
+        return toReturn;
 
     }
 
@@ -40,7 +55,6 @@ public class Selection {
         return probability;
     }
 
-
     public static TeamRefactor rouletteWheel(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
         double random = new Random().nextDouble();
         HashMap<TeamRefactor, Double> population = new HashMap<>();
@@ -56,7 +70,7 @@ public class Selection {
     }
 
 
-    public static HashMap<TeamRefactor, Double> getProbabilityForRank(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
+    public static HashMap<TeamRefactor, Double> getProbabilityForRank(ArrayList<TeamRefactor> popolazione) {
         popolazione.sort(Comparator.comparing(TeamRefactor::getValoreTeam).reversed());
         HashMap<TeamRefactor, Double> probabilities = new HashMap<>();
         for (int i = 0; i < popolazione.size(); i++) {
@@ -70,7 +84,7 @@ public class Selection {
         double sum = 0.0;
         HashMap<TeamRefactor, Double> probabilites = new HashMap<>();
         ArrayList<TeamRefactor> selectedPop = new ArrayList<>();
-        probabilites = getProbabilityForRank(popolazione, skills);
+        probabilites = getProbabilityForRank(popolazione);
         for (int i = 0; i < popolazione.size(); i++) {
             popolazione.get(i).calcolaFitness(skills);
             sum += popolazione.get(i).getValoreTeam();
@@ -88,12 +102,12 @@ public class Selection {
         return selectedPop;
     }
 
-
-    public static ArrayList<TeamRefactor> truncationSelection(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills){
+    /*La truncation selection prevede un restringimento della popolazione del 50% */
+    public static ArrayList<TeamRefactor> truncationSelection(ArrayList<TeamRefactor> popolazione) {
         popolazione.sort(Comparator.comparing(TeamRefactor::getValoreTeam).reversed());
         ArrayList<TeamRefactor> selectedPop = new ArrayList<>();
-        int portion = (int) (popolazione.size()*0.5);
-        for (int i=0; i< portion; i++){
+        int portion = (int) (popolazione.size() * 0.5);
+        for (int i = 0; i < portion; i++) {
             selectedPop.add(popolazione.get(i));
         }
 

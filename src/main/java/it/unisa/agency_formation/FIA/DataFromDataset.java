@@ -9,6 +9,8 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/* La funzione fromDataSet prende i dati dal dataset ottenendo quindi:
+ID, nome, cognome, email, tre skills seguite dai rispettivi livelli */
 public class DataFromDataset {
     public static ArrayList<DipendenteRefactor> fromDataSet() throws IOException {
         String[] HEADERS = {"id", "name", "surname", "email",
