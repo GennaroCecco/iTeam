@@ -8,28 +8,10 @@ import java.util.*;
 
 public class iTeam {
 
-    private static final double prob_mutation = 0.6;
     private static final double avg_Skills = 5.0;
     private static final int numberOfMemberForTournament = 3;
     private static final DecimalFormat df = new DecimalFormat("###.##");
 
-    /*La mutation ci permette di modificare i geni dell’individuo corrente con geni
-     di un individuo scelto casualmente dalla popolazione */
-    public static TeamRefactor mutation(TeamRefactor team, ArrayList<TeamRefactor> popolazione) {
-        TeamRefactor newTeam = team;
-        double prob = new Random().nextDouble();
-        TeamRefactor tmp = new TeamRefactor();
-        int pos = new Random().nextInt(popolazione.size());
-        tmp = popolazione.get(pos);
-        if (prob < prob_mutation) {
-            int posDip = new Random().nextInt(tmp.getDipendenti().size());
-            if (!newTeam.getDipendenti().contains(tmp.getDipendenti().get(posDip))) {
-                newTeam.getDipendenti().remove(posDip);
-                newTeam.getDipendenti().add(posDip, tmp.getDipendenti().get(posDip));
-            }
-        }
-        return newTeam;
-    }
     /* L'evaluate sceglie i migliori individui della generazione attuale, ritornando un insieme
     di invidui la cui differenza con avg_Skills sia più vicina a 0 */
     public static ArrayList<TeamRefactor> evaluate
@@ -79,7 +61,7 @@ public class iTeam {
                 offSpring.add(crossedTeam2);
             }
             for (int j = 0; j < offSpring.size(); j++) {
-                newPool.add(mutation(offSpring.get(j), pool));
+                newPool.add(Mutation.mutation(offSpring.get(j), pool));
             }
 
             ArrayList<TeamRefactor> evaluatedPop = evaluate(newPool, skillsRichieste);
