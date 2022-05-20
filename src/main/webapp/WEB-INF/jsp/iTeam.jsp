@@ -17,7 +17,6 @@
     <title>TeamAI</title>
 </head>
 <body>
-<div class="loading" id="logo-loader" style="display: none;"><div id="video" style="overflow: hidden; position: fixed; top: 50%; left: 50%; margin-top: -540px; margin-left: -960px;"></div><div id="binary"></div></div>
 <c:import url="/static/Header.jsp"/>
 <div class="footer-wrap" id="body">
     <h1>Il miglior team elaborato dall'AI per: <b>${teamDB.getNomeTeam()}</b></h1>
@@ -27,6 +26,7 @@
                 <div id="flex-team"><h2>Progetto: ${teamDB.getNomeProgetto()}</h2></div>
                 <h4>La valutazione totale è:<br><%=df.format(team.getValoreTeam())%> su 5<br>
                     Team realizzato in:<br>${tempoEsecuzione} secondi</h4>
+                <div id="ottimizza">
                 <div class="ottimizza">
                     <a href="SalvaTeam?idTeam=${teamDB.getIdTeam()}&dip=${team.getDipendenti().get(0).getId()}&dip=${team.getDipendenti().get(1).getId()}&dip=${team.getDipendenti().get(2).getId()}&dip=${team.getDipendenti().get(3).getId()}">
                         <button onclick="loading()">Conferma il team</button>
@@ -38,6 +38,9 @@
                         <button onclick="ottimizza()">Riavvia l'AI</button>
                     </a>
                 </div>
+                </div>
+                    <div id="logo-loader" style="display: none;"><img src="img/dots.gif"></div>
+
             </div>
             <div class="team-descr">
                 <h2>Descrizione</h2>
