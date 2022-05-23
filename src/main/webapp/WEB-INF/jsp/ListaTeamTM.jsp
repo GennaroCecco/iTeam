@@ -56,14 +56,14 @@
                                 </button>
                             </div>
                         </div>
-                        <c:if test="${team.getCompetenza()!=null}">
                         <div class="ottimizza" id="ottimizza" name="ottimizza">
+                        <c:if test="${team.getCompetenza()!=null}">
                             <a href="OttimizzaTeam?idTeam=${team.getIdTeam()}">
                                 <button onclick="ottimizza(${indexSpecific})">Ottimizza con la nostra AI</button>
                             </a>
-                        </div>
-                            <div name="logo-loader" style="display: none;"><img src="img/dots.gif"></div>
                         </c:if>
+                        </div>
+                        <div name="logo-loader" style="display: none;"><img src="img/dots.gif"></div>
                         <div class="confermaScioglimento" name="conferma-scioglimento" style="display: none">
                             <h3>Sicuro di voler sciogliere il team selezionato?</h3>
                             <button class="nega" onclick="scioglimentoTeam(${indexSkill})">No</button>
