@@ -35,7 +35,7 @@
                 <div class="ottimizza">
                     <h5>Non sei soddisfatto del team?</h5>
                     <a href="OttimizzaTeam?idTeam=${teamDB.getIdTeam()}">
-                        <button onclick="ottimizza()">Riavvia l'AI</button>
+                        <button onclick="loading()">Riavvia l'AI</button>
                     </a>
                 </div>
                 </div>

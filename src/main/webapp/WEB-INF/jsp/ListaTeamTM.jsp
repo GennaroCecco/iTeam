@@ -26,6 +26,7 @@
     <c:choose>
         <c:when test="${listTeam!=null}">
             <c:set var="indexSkill" value="0" scope="page"/>
+            <c:set var="indexSpecific" value="0" scope="page"/>
             <c:forEach var="team" items="${listTeam}">
                 <div class="team">
                     <div class="team-inf">
@@ -56,12 +57,12 @@
                             </div>
                         </div>
                         <c:if test="${team.getCompetenza()!=null}">
-                        <div class="ottimizza" id="ottimizza">
+                        <div class="ottimizza" id="ottimizza" name="ottimizza">
                             <a href="OttimizzaTeam?idTeam=${team.getIdTeam()}">
-                                <button onclick="ottimizza()">Ottimizza con la nostra AI</button>
+                                <button onclick="ottimizza(${indexSpecific})">Ottimizza con la nostra AI</button>
                             </a>
                         </div>
-                            <div id="logo-loader" style="display: none;"><img src="img/dots.gif"></div>
+                            <div name="logo-loader" style="display: none;"><img src="img/dots.gif"></div>
                         </c:if>
                         <div class="confermaScioglimento" name="conferma-scioglimento" style="display: none">
                             <h3>Sicuro di voler sciogliere il team selezionato?</h3>
@@ -142,6 +143,7 @@
                     </div>
                 </div>
                 <c:set var="indexSkill" value="${indexSkill + 1}" scope="page"/>
+                <c:set var="indexSpecific" value="${indexSpecific + 1}" scope="page"/>
             </c:forEach>
         </c:when>
         <c:otherwise>
