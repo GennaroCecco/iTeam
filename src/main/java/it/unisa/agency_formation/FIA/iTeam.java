@@ -63,7 +63,9 @@ public class iTeam {
             for (int j = 0; j < offSpring.size(); j++) {
                 newPool.add(Mutation.mutation(offSpring.get(j), pool));
             }
-
+            ArrayList<TeamRefactor> elitismo = new ArrayList<>();
+             //elitismo = Elistism.elitism(newPool,offSpring,skillsRichieste);
+            //ArrayList<TeamRefactor> evaluatedPop = evaluate(elitismo, skillsRichieste);
             ArrayList<TeamRefactor> evaluatedPop = evaluate(newPool, skillsRichieste);
             for (int j = 0; j < evaluatedPop.size(); j++) {
                 evaluatedPop.get(j).calcolaFitness(skillsRichieste);
@@ -72,6 +74,7 @@ public class iTeam {
                     bestScore = evaluatedPop.get(j).getValoreTeam();
                 }
             }
+            //newPool = elitismo;
             if (i % 5 == 0 || bestScore == avg_Skills) {
                 gen.add(i);
                 teamBest.calcolaFitness(skillsRichieste);
@@ -82,23 +85,23 @@ public class iTeam {
                 System.out.println("Valutazione: " + df.format(teamBest.getValoreTeam()));
             }
             if (bestScore == avg_Skills) {
-                /*LinearChart chart = new LinearChart(
+                LinearChart chart = new LinearChart(
                         "iTeam",
                         "Team valutati");
                 chart.createDataset(scoreTeam, gen);
                 chart.pack();
                 RefineryUtilities.centerFrameOnScreen(chart);
-                chart.setVisible(true);*/
+                chart.setVisible(true);
                 return teamBest;
             }
         }
-        /*LinearChart chart = new LinearChart(
+        LinearChart chart = new LinearChart(
                 "iTeam",
                 "Team valutati");
         chart.createDataset(scoreTeam, gen);
         chart.pack();
         RefineryUtilities.centerFrameOnScreen(chart);
-        chart.setVisible(true);*/
+        chart.setVisible(true);
         return teamBest;
 
     }
@@ -110,7 +113,7 @@ public class iTeam {
         skillsRichieste.add("C++");
         skillsRichieste.add("Java");
         skillsRichieste.add("Ruby");
-        ArrayList<TeamRefactor> population = Population.initPopulation(data.size(), data, skillsRichieste);
+        ArrayList<TeamRefactor> population = Population.initPopulation(1000000, data, skillsRichieste);
         TeamRefactor team = null;
         System.out.println("Dim pop: " + population.size());
         team = evolve(population, skillsRichieste);
