@@ -598,7 +598,11 @@ Fondamenti di Intelligenza Artificiale
     height: 100%;
 }
 
-.skill-float {
-    margin: 0 15%;
+.inputText {
+    display: block;
     float: left;
+}
+
+.checkbox1 input, .checkbox2 input {
+    float: left ;
 }

@@ -20,13 +20,13 @@
     <title>Lista Team</title>
 </head>
 <body>
-<div class="loading" id="logo-loader" style="display: none;"><div id="video" style="overflow: hidden; position: fixed; top: 50%; left: 50%; margin-top: -540px; margin-left: -960px;"></div><div id="binary"></div></div>
 <c:import url="/static/Header.jsp"/>
 <div class="footer-wrap" id="body">
     <h1>Team</h1>
     <c:choose>
         <c:when test="${listTeam!=null}">
             <c:set var="indexSkill" value="0" scope="page"/>
+            <c:set var="indexSpecific" value="0" scope="page"/>
             <c:forEach var="team" items="${listTeam}">
                 <div class="team">
                     <div class="team-inf">
@@ -56,13 +56,14 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="ottimizza" id="ottimizza" name="ottimizza">
                         <c:if test="${team.getCompetenza()!=null}">
-                        <div class="ottimizza">
-                        <a href="OttimizzaTeam?idTeam=${team.getIdTeam()}">
-                            <button onclick="ottimizza()">Ottimizza con la nostra AI</button>
-                        </a>
-                        </div>
+                            <a href="OttimizzaTeam?idTeam=${team.getIdTeam()}">
+                                <button onclick="ottimizza(${indexSpecific})">Ottimizza con la nostra AI</button>
+                            </a>
                         </c:if>
+                        </div>
+                        <div name="logo-loader" style="display: none;"><img src="img/dots.gif"></div>
                         <div class="confermaScioglimento" name="conferma-scioglimento" style="display: none">
                             <h3>Sicuro di voler sciogliere il team selezionato?</h3>
                             <button class="nega" onclick="scioglimentoTeam(${indexSkill})">No</button>
@@ -101,22 +102,22 @@
                                     <input type="hidden" name="action" value="competenze">
                                     <div class="skills-check">
                                         <div class="checkbox1">
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="HTML">HTML<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="C#">C#<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="C++">C++<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="C">C<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="Ruby">Ruby<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="Node">Node.js<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox" name="skill" value="React">React<br></div>
+                                            <input type="checkbox" class="skill-checkbox" name="skill" value="HTML"><div class="inputText">HTML<br></div><br>
+                                           <input type="checkbox" class="skill-checkbox" name="skill" value="C#"><div class="inputText">C#<br></div><br>
+                                           <input type="checkbox" class="skill-checkbox" name="skill" value="C++"><div class="inputText">C++<br></div><br>
+                                           <input type="checkbox" class="skill-checkbox" name="skill" value="C"><div class="inputText">C<br></div><br>
+                                           <input type="checkbox" class="skill-checkbox" name="skill" value="Ruby"><div class="inputText">Ruby<br></div><br>
+                                           <input type="checkbox" class="skill-checkbox" name="skill" value="Node"><div class="inputText">Node.js<br></div><br>
+                                           <input type="checkbox" class="skill-checkbox" name="skill" value="React"><div class="inputText">React<br></div><br>
                                         </div>
                                         <div class="checkbox2">
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="Android">Android<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="javascript">JavaScript<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="Python">Python<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="CSS">CSS<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="Java">Java<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="PHP">PHP<br></div>
-                                            <div class="skill-float"><input type="checkbox" class="skill-checkbox1" name="skill" value="SQL">SQL<br></div>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Android"><div class="inputText">Android<br></div><br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="javascript"><div class="inputText">JavaScript<br></div><br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Python"><div class="inputText">Python<br></div><br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="CSS"><div class="inputText">CSS<br></div><br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="Java"><div class="inputText">Java<br></div><br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="PHP"><div class="inputText">PHP<br></div><br>
+                                            <input type="checkbox" class="skill-checkbox1" name="skill" value="SQL"><div class="inputText">SQL<br></div><br>
                                         </div>
                                     </div>
                                     <input type="hidden" name="idTeam" value="${team.getIdTeam()}">
@@ -142,6 +143,7 @@
                     </div>
                 </div>
                 <c:set var="indexSkill" value="${indexSkill + 1}" scope="page"/>
+                <c:set var="indexSpecific" value="${indexSpecific + 1}" scope="page"/>
             </c:forEach>
         </c:when>
         <c:otherwise>

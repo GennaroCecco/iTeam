@@ -8,27 +8,12 @@ import java.util.*;
 
 public class iTeam {
 
-    private static final double prob_mutation = 0.6;
     private static final double avg_Skills = 5.0;
+    private static final int numberOfMemberForTournament = 3;
     private static final DecimalFormat df = new DecimalFormat("###.##");
 
-
-    public static TeamRefactor mutation(TeamRefactor team, ArrayList<TeamRefactor> popolazione) {
-        TeamRefactor newTeam = team;
-        double prob = new Random().nextDouble();
-        TeamRefactor tmp = new TeamRefactor();
-        int pos = new Random().nextInt(popolazione.size());
-        tmp = popolazione.get(pos);
-        if (prob < prob_mutation) {
-            int posDip = new Random().nextInt(tmp.getDipendenti().size());
-            if (!newTeam.getDipendenti().contains(tmp.getDipendenti().get(posDip))) {
-                newTeam.getDipendenti().remove(posDip);
-                newTeam.getDipendenti().add(posDip, tmp.getDipendenti().get(posDip));
-            }
-        }
-        return newTeam;
-    }
-
+    /* L'evaluate sceglie i migliori individui della generazione attuale, ritornando un insieme
+    di invidui la cui differenza con avg_Skills sia più vicina a 0 */
     public static ArrayList<TeamRefactor> evaluate
             (ArrayList<TeamRefactor> population, ArrayList<String> skills) {
         ArrayList<TeamRefactor> toReturn = new ArrayList<>();
@@ -43,9 +28,10 @@ public class iTeam {
         return toReturn;
     }
 
-
+    /* L'evolve contiene tutti i passi che l'algoritmo deve seguire ciclicamente
+    (ad ogni ciclo corrisponde una generazione) */
     public static TeamRefactor evolve(ArrayList<TeamRefactor> population, ArrayList<String> skillsRichieste) {
-        int numIterazioni = 100;
+        int numIterazioni = 50;
         double bestScore = 0.0;
 
         ArrayList<Double> scoreTeam = new ArrayList<>();
@@ -57,25 +43,29 @@ public class iTeam {
         for (int i = 0; i < numIterazioni; i++) {
             ArrayList<TeamRefactor> pool;
             char[] animationChars = new char[]{'|', '/', '-', '\\'};
-            System.out.print("Processing: " + i + "% " + animationChars[i % 4] + "\r");
+            System.out.print("Processing: " + i*2 + "% " + animationChars[i % 4] + "\r");
             pool = newPool;
             newPool = new ArrayList<>();
-            ArrayList<TeamRefactor> offSpring = new ArrayList<>();
+            int tournamentSize = new Random().nextInt(population.size());
 
-            for (int j = 0; j < pool.size(); j = j + 2) {
-                TeamRefactor team1 = Selection.tournamentSelection(pool, skillsRichieste);
-                TeamRefactor team2 = Selection.tournamentSelection(pool, skillsRichieste);
-                ArrayList<TeamRefactor> crossedTeams = Crossover.uniformCrossover(team1, team2);
+            ArrayList<TeamRefactor> offSpring = new ArrayList<>();
+            ArrayList<TeamRefactor> parents = Selection.tournamentSelection(pool, skillsRichieste,tournamentSize,
+                    numberOfMemberForTournament);
+            for (int j = 0; j < parents.size()-1; j = j + 2) {
+                TeamRefactor team1 = parents.get(j);
+                TeamRefactor team2 = parents.get(j+1);
+                ArrayList<TeamRefactor> crossedTeams = Crossover.onePointCrossover(team1, team2);
                 TeamRefactor crossedTeam1 = crossedTeams.get(0);
                 TeamRefactor crossedTeam2 = crossedTeams.get(1);
                 offSpring.add(crossedTeam1);
                 offSpring.add(crossedTeam2);
             }
-
             for (int j = 0; j < offSpring.size(); j++) {
-                newPool.add(mutation(offSpring.get(j), pool));
+                newPool.add(Mutation.mutation(offSpring.get(j), pool));
             }
-
+            ArrayList<TeamRefactor> elitismo = new ArrayList<>();
+             //elitismo = Elistism.elitism(newPool,offSpring,skillsRichieste);
+            //ArrayList<TeamRefactor> evaluatedPop = evaluate(elitismo, skillsRichieste);
             ArrayList<TeamRefactor> evaluatedPop = evaluate(newPool, skillsRichieste);
             for (int j = 0; j < evaluatedPop.size(); j++) {
                 evaluatedPop.get(j).calcolaFitness(skillsRichieste);
@@ -84,6 +74,7 @@ public class iTeam {
                     bestScore = evaluatedPop.get(j).getValoreTeam();
                 }
             }
+            //newPool = elitismo;
             if (i % 5 == 0 || bestScore == avg_Skills) {
                 gen.add(i);
                 teamBest.calcolaFitness(skillsRichieste);
@@ -122,7 +113,7 @@ public class iTeam {
         skillsRichieste.add("C++");
         skillsRichieste.add("Java");
         skillsRichieste.add("Ruby");
-        ArrayList<TeamRefactor> population = Population.initPopulation(data.size(), data, skillsRichieste);
+        ArrayList<TeamRefactor> population = Population.initPopulation(1000000, data, skillsRichieste);
         TeamRefactor team = null;
         System.out.println("Dim pop: " + population.size());
         team = evolve(population, skillsRichieste);

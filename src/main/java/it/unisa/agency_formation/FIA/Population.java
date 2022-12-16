@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/* initPopulation raggruppa la popolazione in team da 4 filtrando i dipendenti in base alle skills richieste */
 public class Population {
 
     public static ArrayList<TeamRefactor> initPopulation(int size, ArrayList<DipendenteRefactor> data,
                                                          ArrayList<String> skillsRichieste) {
         ArrayList<DipendenteRefactor> popolazione = new ArrayList<>();
         int pos = 0;
-        if(size < data.size()) {
+        if (size < data.size()) {
             pos = new Random().nextInt(data.size() - size);
         }
 
-        for (int i = pos; i < pos+size; i++) {
+        for (int i = pos; i < pos + size; i++) {
             DipendenteRefactor temp = null;
             HashMap<String, Integer> toAdd = new HashMap<>();
             ArrayList<String> skillsTrovate = new ArrayList<>();
@@ -34,7 +35,7 @@ public class Population {
                     }
                 }
             }
-            if (temp != null&&temp.getSkills().size() >= 1) {
+            if (temp != null && temp.getSkills().size() >= 1) {
                 popolazione.add(temp);
             }
         }

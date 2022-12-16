@@ -26,12 +26,12 @@ public class TeamRefactor {
             for (int i = 0; i < skillsRichieste.size(); i++) {
                 if (dip.getSkills().containsKey(skillsRichieste.get(i))) {
                     if (!stringheTrovate.contains(skillsRichieste.get(i))) {
-                       temp += dip.getSkills().get(skillsRichieste.get(i));
+                        temp += dip.getSkills().get(skillsRichieste.get(i));
                         stringheTrovate.add(skillsRichieste.get(i));
                     }
                 }
             }
-            toReturn += temp/3;
+            toReturn += temp / 3;
         }
         toReturn = toReturn / dipendenti.size();
         this.valoreTeam = toReturn;

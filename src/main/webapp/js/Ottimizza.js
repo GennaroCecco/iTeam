@@ -1,16 +1,16 @@
-function ottimizza() {
-    $("#footer").hide();
-    $("#header").hide();
-    $('#logo-loader').css("display", "block");
-    $('#body').hide();
-    $('#video').html("<video controls='false' autoplay playsinline style='pointer-events: none;' loop><source src=\"img/Loading.mp4\" type=\"video/mp4\"></video>");
-    $('#binary').html("<audio id=\"binary\" controls autoplay loop hidden><source src=\"img/Loading.mp3\" type=\"audio/mpeg\"></audio>");
+function ottimizza(index) {
+    console.log(index);
+    var logoLoader = document.getElementsByName("logo-loader")[index];
+    var noButtons = document.getElementsByName("ottimizza")[index];
+    $(noButtons).css("display", "none");
+    $(logoLoader).css("display", "block");
+    $(logoLoader).html("<img src=\"img/dots.gif\">");
+    $("button").attr("disabled", "disable");
 }
 
 function loading() {
-    $("#footer").hide();
-    $("#header").hide();
+    $("#ottimizza").css("display", "none");
     $('#logo-loader').css("display", "block");
-    $('#body').hide();
-    $('#video').html("<video controls='false' autoplay playsinline style='pointer-events: none;' loop><source src=\"img/Loading.mp4\" type=\"video/mp4\"></video>");
+    $('#logo-loader').html("<img src=\"img/dots.gif\">");
+    $("button").attr("disabled", "disable");
 }

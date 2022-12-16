@@ -16,10 +16,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/* OttimizzaTeamControl avvia l'algoritmo di iTeam */
 @WebServlet("/OttimizzaTeam")
 public class OttimizzaTeamControl extends HttpServlet {
 
-    private static final int SIZE_POPULATION = 1000000;
     private static DecimalFormat df = new DecimalFormat("###.##");
 
     @Override
@@ -28,17 +28,12 @@ public class OttimizzaTeamControl extends HttpServlet {
         try {
             Team team = getTeamFromManager(idTeam);
             String competenze = team.getCompetenza();
-            String skill1 = null;
-            String skill2 = null;
-            String skill3 = null;
             ArrayList<String> comp = new ArrayList<>(Arrays.asList(competenze.split(",")));
-            if (comp.size() > 3) {
-                //problema, ci sono più di 3 skill
-            } else {
-                skill1 = comp.get(0);
-                skill2 = comp.get(1);
-                skill3 = comp.get(2);
-            }
+
+            String skill1 = comp.get(0);
+            String skill2 = comp.get(1);
+            String skill3 = comp.get(2);
+
 
             if (skill1 != null && skill2 != null && skill3 != null) {
                 //inizio a prendere TUTTI i dipendenti dal dataset
@@ -47,13 +42,9 @@ public class OttimizzaTeamControl extends HttpServlet {
                 skillsRichieste.add(skill1);
                 skillsRichieste.add(skill2);
                 skillsRichieste.add(skill3);
-                //inizio a restringere il campo, prendo e creo team che hanno dipendenti con quelle skill
-                ArrayList<TeamRefactor> population = Population.initPopulation(SIZE_POPULATION, data, skillsRichieste);
+                ArrayList<TeamRefactor> population = Population.initPopulation(data.size(), data, skillsRichieste);
                 long startTime = System.nanoTime();
-                TeamRefactor teamRefactor =null;
-                while(teamRefactor==null) {
-                    teamRefactor = iTeam.evolve(population, skillsRichieste);
-                }
+                TeamRefactor teamRefactor = iTeam.evolve(population, skillsRichieste);
                 long endTime = System.nanoTime();
                 int second = (int) ((endTime - startTime) / 1000000000);
                 req.setAttribute("tempoEsecuzione", second);
@@ -76,5 +67,4 @@ public class OttimizzaTeamControl extends HttpServlet {
         TeamManager teamManager = new TeamManagerImpl();
         return teamManager.recuperaTeamById2(idTeam);
     }
-
 }

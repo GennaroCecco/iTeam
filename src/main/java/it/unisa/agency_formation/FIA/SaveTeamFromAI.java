@@ -22,23 +22,24 @@ import java.io.IOException;
 import java.io.Reader;
 import java.sql.SQLException;
 
+/* SaveTeamFromAI salva i dipendenti del team, il quale viene registrato, forniti dall'AI all'interno del database */
 @WebServlet("/SalvaTeam")
 public class SaveTeamFromAI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int idTeam = Integer.parseInt(request.getParameter("idTeam"));
         String[] idDips = (String[]) request.getParameterValues("dip");
-        for(String idDip: idDips){
+        for (String idDip : idDips) {
             String[] HEADERS = {"id", "name", "surname", "email",
                     "skill1", "skill2", "skill3", "level1", "level2", "level3"};
-            Reader in = new FileReader(System.getProperty("user.home")+"\\IdeaProjects\\iTeam\\Dataset\\dataset.csv");
+            Reader in = new FileReader(System.getProperty("user.home") + "\\IdeaProjects\\iTeam\\Dataset\\dataset.csv");
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
                     .withHeader(HEADERS)
                     .withFirstRecordAsHeader()
                     .parse(in);
             for (CSVRecord record : records) {
                 String id = record.get("id");
-                if(Integer.parseInt(id) == Integer.parseInt(idDip)){
+                if (Integer.parseInt(id) == Integer.parseInt(idDip)) {
                     String name = record.get("name");
                     String surname = record.get("surname");
                     String email = record.get("email");
@@ -58,10 +59,10 @@ public class SaveTeamFromAI extends HttpServlet {
                 }
             }
         }
-        for(String idDip: idDips){
+        for (String idDip : idDips) {
             String[] HEADERS = {"id", "name", "surname", "email",
                     "skill1", "skill2", "skill3", "level1", "level2", "level3"};
-            Reader in = new FileReader(System.getProperty("user.home")+"\\IdeaProjects\\iTeam\\Dataset\\dataset.csv");
+            Reader in = new FileReader(System.getProperty("user.home") + "\\IdeaProjects\\iTeam\\Dataset\\dataset.csv");
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
                     .withHeader(HEADERS)
                     .withFirstRecordAsHeader()
@@ -100,7 +101,7 @@ public class SaveTeamFromAI extends HttpServlet {
         }
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ListaTeam");
-        dispatcher.forward(request,response);
+        dispatcher.forward(request, response);
     }
 
     @Override
@@ -115,20 +116,17 @@ public class SaveTeamFromAI extends HttpServlet {
 
     private static boolean saveDipFromManager(Dipendente dip, int id) throws SQLException {
         AutenticazioneManager manager = new AutenticazioneManagerImpl();
-        manager.salvaDipendente2(dip,id);
-        return manager.setTeamDipendente(id,dip.getTeam().getIdTeam());
+        manager.salvaDipendente2(dip, id);
+        return manager.setTeamDipendente(id, dip.getTeam().getIdTeam());
     }
 
     private static boolean saveSkillDipFromManager(int idDip, int idSkill, int livello) throws SQLException {
         FormazioneManager manager = new FormazioneManagerImpl();
-        return manager.addSkillDipendente(idSkill,idDip,livello);
+        return manager.addSkillDipendente(idSkill, idDip, livello);
     }
 
     private static int getIdSkillFromManager(String name) throws SQLException {
         FormazioneManager manager = new FormazioneManagerImpl();
         return manager.getIdSkill(name);
     }
-
-
-
 }
