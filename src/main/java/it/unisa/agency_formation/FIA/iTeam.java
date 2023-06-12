@@ -49,9 +49,8 @@ public class iTeam {
             int tournamentSize = new Random().nextInt(population.size());
 
             ArrayList<TeamRefactor> offSpring = new ArrayList<>();
-            //ArrayList<TeamRefactor> parents = Selection.tournamentSelection(pool, skillsRichieste,tournamentSize,
-             //       numberOfMemberForTournament);
-            ArrayList<TeamRefactor> parents= Selection.rouletteWheel(pool,skillsRichieste);
+            ArrayList<TeamRefactor> parents = Selection.tournamentSelection(pool, skillsRichieste,tournamentSize,
+                   numberOfMemberForTournament);
 
             for (int j = 0; j < parents.size()-1; j = j + 2) {
                 TeamRefactor team1 = parents.get(j);
@@ -66,7 +65,7 @@ public class iTeam {
                 newPool.add(Mutation.mutation(offSpring.get(j), pool));
             }
             ArrayList<TeamRefactor> elitismo = new ArrayList<>();
-             //elitismo = Elistism.elitism(newPool,offSpring,skillsRichieste);
+            //elitismo = Elitism.elitism(newPool,offSpring,skillsRichieste);
             //ArrayList<TeamRefactor> evaluatedPop = evaluate(elitismo, skillsRichieste);
             ArrayList<TeamRefactor> evaluatedPop = evaluate(newPool, skillsRichieste);
             for (int j = 0; j < evaluatedPop.size(); j++) {
