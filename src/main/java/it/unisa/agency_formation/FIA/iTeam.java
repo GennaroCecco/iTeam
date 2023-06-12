@@ -49,8 +49,10 @@ public class iTeam {
             int tournamentSize = new Random().nextInt(population.size());
 
             ArrayList<TeamRefactor> offSpring = new ArrayList<>();
-            ArrayList<TeamRefactor> parents = Selection.tournamentSelection(pool, skillsRichieste,tournamentSize,
-                    numberOfMemberForTournament);
+            //ArrayList<TeamRefactor> parents = Selection.tournamentSelection(pool, skillsRichieste,tournamentSize,
+             //       numberOfMemberForTournament);
+            ArrayList<TeamRefactor> parents= Selection.rouletteWheel(pool,skillsRichieste);
+
             for (int j = 0; j < parents.size()-1; j = j + 2) {
                 TeamRefactor team1 = parents.get(j);
                 TeamRefactor team2 = parents.get(j+1);
@@ -111,8 +113,8 @@ public class iTeam {
         ArrayList<DipendenteRefactor> data = DataFromDataset.fromDataSet();
         ArrayList<String> skillsRichieste = new ArrayList<>();
         skillsRichieste.add("C++");
-        skillsRichieste.add("Java");
-        skillsRichieste.add("Ruby");
+        skillsRichieste.add("CSS");
+        skillsRichieste.add("Python");
         ArrayList<TeamRefactor> population = Population.initPopulation(1000000, data, skillsRichieste);
         TeamRefactor team = null;
         System.out.println("Dim pop: " + population.size());
@@ -125,7 +127,7 @@ public class iTeam {
             System.out.println("Valutazione: " + df.format(team.getValoreTeam()));
             System.out.println("-----------------");
         } else {
-            System.out.println("Scusami ho avuto dei problemi, potresti avere l'amabilità di ri-eseguirmi");
+            System.out.println("Scusami ho avuto dei problemi, potresti ri-eseguirmi");
         }
     }
 
