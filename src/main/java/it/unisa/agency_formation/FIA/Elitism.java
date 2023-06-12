@@ -3,7 +3,7 @@ package it.unisa.agency_formation.FIA;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Elistism {
+public class Elitism {
     private static final double elitism_size = 0.1;
     public static ArrayList<TeamRefactor> ordina(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
         ArrayList<TeamRefactor> toReturn = popolazione;
@@ -13,6 +13,10 @@ public class Elistism {
         toReturn.sort(Comparator.comparing(TeamRefactor::getValoreTeam).reversed());
         return toReturn;
     }
+
+    /*L'elitismo ha lo scopo di salvare una piccola parte di popolazione come "Elité".
+     In essa ci saranno gli individui migliori per quella generazione e restituisce in poche generazioni
+     una soluzione molto vicina all'ottimo */
     public static ArrayList<TeamRefactor> elitism(ArrayList<TeamRefactor> popolazione, ArrayList<TeamRefactor> off, ArrayList<String> skills) {
         ArrayList<TeamRefactor> population = ordina(popolazione,skills);
         ArrayList<TeamRefactor> offSpring = ordina(off,skills);

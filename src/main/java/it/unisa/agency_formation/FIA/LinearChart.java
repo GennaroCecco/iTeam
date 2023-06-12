@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class LinearChart extends ApplicationFrame {
     private DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
+    /*LinearChart ha la funzione di mostrare il grafico delle generazioni
+     e della loro rispettiva valutazione */
     public LinearChart(String applicationTitle, String chartTitle) {
         super(applicationTitle);
         JFreeChart lineChart = ChartFactory.createLineChart(

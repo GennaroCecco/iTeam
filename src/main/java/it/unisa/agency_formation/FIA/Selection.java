@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Selection {
-    private static final double numberOfIndividuals = new Random().nextDouble();
+
+    private static final double prob_truncation = 0.5;
 
     public Selection() {
     }
@@ -38,7 +39,6 @@ public class Selection {
             toReturn.add(best);
         }
         return toReturn;
-
     }
 
     public static HashMap<TeamRefactor, Double> setProbabilityForRoulette(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
@@ -54,7 +54,8 @@ public class Selection {
         }
         return probability;
     }
-
+    /*La roulette wheel assegna ad ogni individuo una parte proporzionata per valore di valutazione
+     a confronto con il resto delle valutazioni */
     public static TeamRefactor rouletteWheel(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
         double random = new Random().nextDouble();
         HashMap<TeamRefactor, Double> population = new HashMap<>();
@@ -79,7 +80,9 @@ public class Selection {
         }
         return probabilities;
     }
-
+    /*La Rank Selection non si basa sul valore di fit ma bensì sulla classificazione degli individui.
+     Viene assegnato il grado 1 al peggiore individuo e n al migliore.
+     In base al rango ogni individuo avrà la rispettiva probabilità di essere selezionato.*/
     public static ArrayList<TeamRefactor> rankSelection(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
         double sum = 0.0;
         HashMap<TeamRefactor, Double> probabilites = new HashMap<>();
@@ -106,7 +109,7 @@ public class Selection {
     public static ArrayList<TeamRefactor> truncationSelection(ArrayList<TeamRefactor> popolazione) {
         popolazione.sort(Comparator.comparing(TeamRefactor::getValoreTeam).reversed());
         ArrayList<TeamRefactor> selectedPop = new ArrayList<>();
-        int portion = (int) (popolazione.size() * 0.5);
+        int portion = (int) (popolazione.size() * prob_truncation);
         for (int i = 0; i < portion; i++) {
             selectedPop.add(popolazione.get(i));
         }
