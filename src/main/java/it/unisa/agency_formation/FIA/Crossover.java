@@ -105,8 +105,9 @@ public class Crossover {
         dips2.addAll(team2.getDipendenti());
 
         if (new Random().nextDouble() < prob_crossover) {
+            double prob = new Random().nextDouble();
             for (int i = 0; i < dips1.size(); i++) {
-                double prob = new Random().nextDouble();
+
                 if (prob < prob_uniform) {
                     son1.add(dips2.get(i));
                     son2.add(dips1.get(i));

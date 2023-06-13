@@ -77,12 +77,17 @@ public class Selection {
     public static HashMap<TeamRefactor, Double> getProbabilityForRank(ArrayList<TeamRefactor> popolazione) {
         popolazione.sort(Comparator.comparing(TeamRefactor::getValoreTeam).reversed());
         HashMap<TeamRefactor, Double> probabilities = new HashMap<>();
+        int rank = 1;
+
         for (int i = 0; i < popolazione.size(); i++) {
-            double prob = i / (popolazione.size() * (popolazione.size() - 1));
+            double prob = rank / (double) popolazione.size();
             probabilities.put(popolazione.get(i), prob);
+            rank++;
         }
+
         return probabilities;
     }
+
     /*La Rank Selection non si basa sul valore di fit ma bensì sulla classificazione degli individui.
      Viene assegnato il grado 1 al peggiore individuo e n al migliore.
      In base al rango ogni individuo avrà la rispettiva probabilità di essere selezionato.*/
