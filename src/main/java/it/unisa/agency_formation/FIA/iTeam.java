@@ -11,6 +11,8 @@ public class iTeam {
     private static final double avg_Skills = 5.0;
     private static final int numberOfMemberForTournament = 3;
     private static final DecimalFormat df = new DecimalFormat("###.##");
+    private static ArrayList<Double> scoreTeam = new ArrayList<>();
+    private static ArrayList<Integer> gen = new ArrayList<>();
 
     /* L'evaluate sceglie i migliori individui della generazione attuale, ritornando un insieme
     di invidui la cui differenza con avg_Skills sia più vicina a 0 */
@@ -34,8 +36,6 @@ public class iTeam {
         int numIterazioni = 50;
         double bestScore = 0.0;
 
-        ArrayList<Double> scoreTeam = new ArrayList<>();
-        ArrayList<Integer> gen = new ArrayList<>();
         ArrayList<TeamRefactor> newPool = population;
 
         System.out.println("Vediamo cosa posso fare...");
@@ -86,16 +86,15 @@ public class iTeam {
                 System.out.println("Valutazione: " + df.format(teamBest.getValoreTeam()));
             }
             if (bestScore == avg_Skills) {
-                LinearChart chart = new LinearChart(
-                        "iTeam",
-                        "Team valutati");
-                chart.createDataset(scoreTeam, gen);
-                chart.pack();
-                RefineryUtilities.centerFrameOnScreen(chart);
-                chart.setVisible(true);
+                createLinearChart();
                 return teamBest;
             }
         }
+        createLinearChart();
+        return teamBest;
+    }
+
+    private static void createLinearChart() {
         LinearChart chart = new LinearChart(
                 "iTeam",
                 "Team valutati");
@@ -103,8 +102,7 @@ public class iTeam {
         chart.pack();
         RefineryUtilities.centerFrameOnScreen(chart);
         chart.setVisible(true);
-        return teamBest;
-
+        chart.toFront();
     }
 
 

@@ -8,6 +8,7 @@ import org.jfree.ui.RefineryUtilities;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class LinearChart extends ApplicationFrame {
@@ -35,6 +36,12 @@ public class LinearChart extends ApplicationFrame {
             this.dataset.addValue(score.get(i), "team", gen.get(i));
         }
 
+    }
+    @Override
+    public void windowClosing(final WindowEvent event) {
+        if (event.getWindow() == this) {
+            dispose();
+        }
     }
 }
 
