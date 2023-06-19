@@ -22,10 +22,10 @@
     <div class="logo">
         <c:choose>
             <c:when test="${param.sameLocation==true}">
-                <img src="../img/Logo Team 4-5.png">
+                <img src="../img/FIAntastici4.png">
             </c:when>
             <c:otherwise>
-                <img src="img/Logo Team 4-5.png">
+                <img src="img/FIAntastici4.png">
             </c:otherwise>
         </c:choose>
     </div>

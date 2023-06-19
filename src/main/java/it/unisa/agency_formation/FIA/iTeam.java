@@ -62,7 +62,7 @@ public class iTeam {
                 offSpring.add(crossedTeam2);
             }
             for (int j = 0; j < offSpring.size(); j++) {
-                newPool.add(Mutation.mutation(offSpring.get(j), pool));
+                newPool.add(Mutation.randomResetting(offSpring.get(j), pool));
             }
             ArrayList<TeamRefactor> elitismo = new ArrayList<>();
             //elitismo = Elitism.elitism(newPool,offSpring,skillsRichieste);
