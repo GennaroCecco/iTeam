@@ -44,7 +44,7 @@ public class Selection {
 
     public static HashMap<TeamRefactor, Double> setProbabilityForRoulette(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
         HashMap<TeamRefactor, Double> probability = new HashMap<>();
-
+        totalSum = 0.0;
         for (int i = 0; i < popolazione.size(); i++) {
             popolazione.get(i).calcolaFitness(skills);
             totalSum += popolazione.get(i).getValoreTeam();
@@ -58,15 +58,14 @@ public class Selection {
     /*La roulette wheel assegna ad ogni individuo una parte proporzionata per valore di valutazione
      a confronto con il resto delle valutazioni */
     public static ArrayList<TeamRefactor> rouletteWheel(ArrayList<TeamRefactor> popolazione, ArrayList<String> skills) {
-        double random = new Random().nextDouble() * totalSum;
-
         HashMap<TeamRefactor, Double> population = new HashMap<>();
+        double random = new Random().nextDouble() * totalSum;
         population = setProbabilityForRoulette(popolazione, skills);
         ArrayList<TeamRefactor> toReturn = new ArrayList<>();
         double sum = 0;
         for (int i = 0; i < popolazione.size(); i++) {
             sum += population.get(popolazione.get(i));
-            if (random < sum) {
+            if (random <= sum) {
                 toReturn.add(popolazione.get(i));
             }
         }
