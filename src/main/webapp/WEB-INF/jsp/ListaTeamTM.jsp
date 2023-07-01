@@ -121,7 +121,7 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="idTeam" value="${team.getIdTeam()}">
-                                    <input type="submit" name="specifica" value="Salva" id="specifica"><br>
+                                    <input type="submit" name="specifica" value="Salva" id="specifica" onmouseenter="submitCheck()"><br>
                                     <span id="specifyCompetence"></span>
                                 </form>
                             </div>
@@ -159,15 +159,28 @@
 <script>
     var limit = 4;
     var temp;
+    var myButton = document.getElementById("specifica");
+    var numSelComp;
     $('input.skill-checkbox').on('change', function(evt) {
+        numSelComp = $('input.skill-checkbox').siblings(':checked').length + $('input.skill-checkbox1').siblings(':checked').length;
+        myButton.disabled = false;
         if($('input.skill-checkbox').siblings(':checked').length +$('input.skill-checkbox1').siblings(':checked').length  >= limit) {
             this.checked = false;
         }
     });
     $('input.skill-checkbox1').on('change', function(evt) {
+        numSelComp = $('input.skill-checkbox').siblings(':checked').length + $('input.skill-checkbox1').siblings(':checked').length;
+        myButton.disabled = false;
         if($('input.skill-checkbox').siblings(':checked').length +$('input.skill-checkbox1').siblings(':checked').length  >= limit) {
             this.checked = false;
         }
     });
+    function submitCheck() {
+        if (numSelComp < 3) {
+            myButton.disabled = true;
+        } else {
+            myButton.disabled = false;
+        }
+    }
 </script>
 </html>

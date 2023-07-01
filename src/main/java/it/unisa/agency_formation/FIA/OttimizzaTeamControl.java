@@ -25,6 +25,7 @@ public class OttimizzaTeamControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int idTeam = Integer.parseInt(req.getParameter("idTeam"));
+        long startTime = System.nanoTime();
         try {
             Team team = getTeamFromManager(idTeam);
             String competenze = team.getCompetenza();
@@ -43,7 +44,7 @@ public class OttimizzaTeamControl extends HttpServlet {
                 skillsRichieste.add(skill2);
                 skillsRichieste.add(skill3);
                 ArrayList<TeamRefactor> population = Population.initPopulation(data.size(), data, skillsRichieste);
-                long startTime = System.nanoTime();
+
                 TeamRefactor teamRefactor = iTeam.evolve(population, skillsRichieste);
                 long endTime = System.nanoTime();
                 int second = (int) ((endTime - startTime) / 1000000000);

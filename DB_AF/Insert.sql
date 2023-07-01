@@ -19,7 +19,7 @@ INSERT INTO skill (`NomeSkill`, `DescrizioneSkill`) VALUES ('C#', 'C#');
 INSERT INTO skill (`NomeSkill`, `DescrizioneSkill`) VALUES ('Android', 'Android');
 INSERT INTO skill (`NomeSkill`, `DescrizioneSkill`) VALUES ('SQL', 'SQL');
 INSERT INTO skill (`NomeSkill`, `DescrizioneSkill`) VALUES ('PHP', 'PHP');
-INSERT INTO team (`NomeProgetto`, `NumeroDipendenti`, `NomeTeam`, `Descrizione`, `IdTM`) VALUES ('TechAll', '8', 'NuoveTecnologie', 'Ricerchiamo nuove tecnologie', 3);
+INSERT INTO team (`NomeProgetto`, `NumeroDipendenti`, `NomeTeam`, `Descrizione`, `IdTM`) VALUES ('TechAll', '4', 'NuoveTecnologie', 'Ricerchiamo nuove tecnologie', 3);
 INSERT INTO dipendenti (`IdDipendente`,`Residenza`, `Telefono`, `Stato`, `AnnoDiNascita`) VALUES (2,'Fisciano', '118', '1', '2000');
 INSERT INTO skillsdipendenti (`IdDipendente`, `IdSkill`, `Livello`) VALUES ('2', '1', '5');
 INSERT INTO skillsdipendenti (`IdDipendente`, `IdSkill`, `Livello`) VALUES ('2', '2', '3');

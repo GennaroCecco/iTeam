@@ -15,10 +15,8 @@ skill = ['Java', 'C', 'HTML', 'Python', 'React', 'Node', 'C++', 'javascript',
 
 names = []
 level = []
-emails = []
 for n in range(records):
     names.append(fake.name())
-    emails.append(fake.email())
 writer.writerow(dict(zip(fieldnames, fieldnames)))
 for i in range(0, records):
     add1 = random.choice(skill)

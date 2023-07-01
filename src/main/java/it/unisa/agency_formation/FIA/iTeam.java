@@ -11,6 +11,8 @@ public class iTeam {
     private static final double avg_Skills = 5.0;
     private static final int numberOfMemberForTournament = 3;
     private static final DecimalFormat df = new DecimalFormat("###.##");
+    private static ArrayList<Double> scoreTeam = new ArrayList<>();
+    private static ArrayList<Integer> gen = new ArrayList<>();
 
     /* L'evaluate sceglie i migliori individui della generazione attuale, ritornando un insieme
     di invidui la cui differenza con avg_Skills sia più vicina a 0 */
@@ -34,8 +36,6 @@ public class iTeam {
         int numIterazioni = 50;
         double bestScore = 0.0;
 
-        ArrayList<Double> scoreTeam = new ArrayList<>();
-        ArrayList<Integer> gen = new ArrayList<>();
         ArrayList<TeamRefactor> newPool = population;
 
         System.out.println("Vediamo cosa posso fare...");
@@ -50,7 +50,8 @@ public class iTeam {
 
             ArrayList<TeamRefactor> offSpring = new ArrayList<>();
             ArrayList<TeamRefactor> parents = Selection.tournamentSelection(pool, skillsRichieste,tournamentSize,
-                    numberOfMemberForTournament);
+                   numberOfMemberForTournament);
+
             for (int j = 0; j < parents.size()-1; j = j + 2) {
                 TeamRefactor team1 = parents.get(j);
                 TeamRefactor team2 = parents.get(j+1);
@@ -61,10 +62,10 @@ public class iTeam {
                 offSpring.add(crossedTeam2);
             }
             for (int j = 0; j < offSpring.size(); j++) {
-                newPool.add(Mutation.mutation(offSpring.get(j), pool));
+                newPool.add(Mutation.randomResetting(offSpring.get(j), pool));
             }
             ArrayList<TeamRefactor> elitismo = new ArrayList<>();
-             //elitismo = Elistism.elitism(newPool,offSpring,skillsRichieste);
+            //elitismo = Elitism.elitism(newPool,offSpring,skillsRichieste);
             //ArrayList<TeamRefactor> evaluatedPop = evaluate(elitismo, skillsRichieste);
             ArrayList<TeamRefactor> evaluatedPop = evaluate(newPool, skillsRichieste);
             for (int j = 0; j < evaluatedPop.size(); j++) {
@@ -85,16 +86,15 @@ public class iTeam {
                 System.out.println("Valutazione: " + df.format(teamBest.getValoreTeam()));
             }
             if (bestScore == avg_Skills) {
-                LinearChart chart = new LinearChart(
-                        "iTeam",
-                        "Team valutati");
-                chart.createDataset(scoreTeam, gen);
-                chart.pack();
-                RefineryUtilities.centerFrameOnScreen(chart);
-                chart.setVisible(true);
+                createLinearChart();
                 return teamBest;
             }
         }
+        createLinearChart();
+        return teamBest;
+    }
+
+    private static void createLinearChart() {
         LinearChart chart = new LinearChart(
                 "iTeam",
                 "Team valutati");
@@ -102,8 +102,7 @@ public class iTeam {
         chart.pack();
         RefineryUtilities.centerFrameOnScreen(chart);
         chart.setVisible(true);
-        return teamBest;
-
+        chart.toFront();
     }
 
 
@@ -111,8 +110,8 @@ public class iTeam {
         ArrayList<DipendenteRefactor> data = DataFromDataset.fromDataSet();
         ArrayList<String> skillsRichieste = new ArrayList<>();
         skillsRichieste.add("C++");
-        skillsRichieste.add("Java");
-        skillsRichieste.add("Ruby");
+        skillsRichieste.add("CSS");
+        skillsRichieste.add("Python");
         ArrayList<TeamRefactor> population = Population.initPopulation(1000000, data, skillsRichieste);
         TeamRefactor team = null;
         System.out.println("Dim pop: " + population.size());
@@ -125,7 +124,7 @@ public class iTeam {
             System.out.println("Valutazione: " + df.format(team.getValoreTeam()));
             System.out.println("-----------------");
         } else {
-            System.out.println("Scusami ho avuto dei problemi, potresti avere l'amabilità di ri-eseguirmi");
+            System.out.println("Scusami ho avuto dei problemi, potresti ri-eseguirmi");
         }
     }
 

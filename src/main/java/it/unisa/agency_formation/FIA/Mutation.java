@@ -13,7 +13,7 @@ public class Mutation {
 
     /*La mutation ci permette di modificare i geni dell’individuo corrente con geni
      di un individuo scelto casualmente dalla popolazione */
-    public static TeamRefactor mutation(TeamRefactor team, ArrayList<TeamRefactor> popolazione) {
+    public static TeamRefactor randomResetting(TeamRefactor team, ArrayList<TeamRefactor> popolazione) {
         TeamRefactor newTeam = team;
         double prob = new Random().nextDouble();
         TeamRefactor tmp = new TeamRefactor();
