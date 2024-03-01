@@ -2,7 +2,7 @@ package it.unisa.agency_formation.FIA;
 
 import java.util.ArrayList;
 import java.util.Random;
-
+//classe crossover
 public class Crossover {
     public Crossover() {
     }
